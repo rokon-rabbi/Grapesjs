@@ -14,12 +14,12 @@
   height: 100%;
 }
 .gjs-block-section {
-  height: 100px;
+  height: 45px;
   background-color: #444;
 }
 .gjs-block {
-  /* width : 200px !important; */
-  height: auto;
+  width : 80px !important;
+  min-height: 10px !important;
   /* min-height: auto; */
 }
 .panel__top {

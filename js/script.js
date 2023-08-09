@@ -8,7 +8,7 @@ const editor = grapesjs.init({
   // As an alternative we could use: `components: '<h1>Hello World Component!</h1>'`,
   fromElement: true,
   // Size of the editor
-  height: "100vh",
+  height: "300px",
   width: "auto",
   // Disable the storage manager for the moment
   storageManager: false,
@@ -67,6 +67,77 @@ const editor = grapesjs.init({
     ],
   },
 });
+
+// custom blocks 3 columns
+editor.BlockManager.add("3-Columns", {
+  label: "3 Columns",
+   
+  content:   `<style>
+                  .gjs-row{
+                      display:flex;
+                      justify-content:flex-start;
+                      align-items:stretch;
+                      flex-wrap:nowrap;
+                      padding:10px;
+                    }
+                    .gjs-cell{
+                      min-height:75px;
+                      flex-grow:1;
+                      flex-basis:100%;
+                    }
+                    @media (max-width: 768px){
+                      .gjs-row{
+                        flex-wrap:wrap;
+                      }
+                    }
+                  </style>
+              <div  class="gjs-row">
+                <div class="gjs-cell">
+                </div>
+                <div class="gjs-cell">
+                 </div>
+               <div class="gjs-cell">
+                </div>
+               </div>
+                  `,
+  attributes: {
+    title: "A block",
+  },
+});
+// custom block 2 column 
+editor.BlockManager.add("2-Columns", {
+        label: "2 Columns",
+        content: `<style>
+                        .gjs-row{
+                            display:flex;
+                            justify-content:flex-start;
+                            align-items:stretch;
+                            flex-wrap:nowrap;
+                            padding:10px;
+                          }
+                          .gjs-cell{
+                            min-height:75px;
+                            flex-grow:1;
+                            flex-basis:100%;
+                          }
+                          @media (max-width: 768px){
+                            .gjs-row{
+                              flex-wrap:wrap;
+                            }
+                          }
+                        </style>
+                    <div  class="gjs-row">
+                      <div class="gjs-cell">
+                      </div>
+                     <div class="gjs-cell">
+                      </div>
+                     </div>
+                        `,
+        attributes: {
+          title: "3-Columns",
+        },
+      });
+
 editor.Panels.addPanel({
   id: "panel-top",
   el: ".panel__top",
@@ -115,39 +186,3 @@ editor.on("run:export-template:before", opts => {
 });
 editor.on("run:export-template", () => console.log("After the command run"));
 editor.on("abort:export-template", () => console.log("Command aborted"));
-
-// custom blocks
-editor.BlockManager.add("3-Columns", {
-  label: "3 Columns",
-  content: `<style>
-            .gjs-row{
-                display:flex;
-                justify-content:flex-start;
-                align-items:stretch;
-                flex-wrap:nowrap;
-                padding:10px;
-              }
-              .gjs-cell{
-                min-height:75px;
-                flex-grow:1;
-                flex-basis:100%;
-              }
-              @media (max-width: 768px){
-                .gjs-row{
-                  flex-wrap:wrap;
-                }
-              }
-            </style>
-            <div class="gjs-row">
-    <div class="gjs-cell">
-    </div>
-    <div class="gjs-cell">
-    </div>
-    <div class="gjs-cell">
-    </div>
-  </div>
-            `,
-  attributes: {
-    title: "A block",
-  },
-});
