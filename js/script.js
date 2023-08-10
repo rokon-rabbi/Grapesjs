@@ -71,8 +71,7 @@ const editor = grapesjs.init({
 // custom blocks 3 columns
 editor.BlockManager.add("3-Columns", {
   label: "3 Columns",
-   
-  content:   `<style>
+  content: `<style>
                   .gjs-row{
                       display:flex;
                       justify-content:flex-start;
@@ -91,12 +90,12 @@ editor.BlockManager.add("3-Columns", {
                       }
                     }
                   </style>
-              <div  class="gjs-row">
-                <div class="gjs-cell">
+              <div data-gjs-type="default"  class="gjs-row">
+                <div data-gjs-type="default" class="gjs-cell">
                 </div>
-                <div class="gjs-cell">
+                <div data-gjs-type="default" class="gjs-cell">
                  </div>
-               <div class="gjs-cell">
+               <div data-gjs-type="default" class="gjs-cell">
                 </div>
                </div>
                   `,
@@ -104,39 +103,6 @@ editor.BlockManager.add("3-Columns", {
     title: "A block",
   },
 });
-// custom block 2 column 
-editor.BlockManager.add("2-Columns", {
-        label: "2 Columns",
-        content: `<style>
-                        .gjs-row{
-                            display:flex;
-                            justify-content:flex-start;
-                            align-items:stretch;
-                            flex-wrap:nowrap;
-                            padding:10px;
-                          }
-                          .gjs-cell{
-                            min-height:75px;
-                            flex-grow:1;
-                            flex-basis:100%;
-                          }
-                          @media (max-width: 768px){
-                            .gjs-row{
-                              flex-wrap:wrap;
-                            }
-                          }
-                        </style>
-                    <div  class="gjs-row">
-                      <div class="gjs-cell">
-                      </div>
-                     <div class="gjs-cell">
-                      </div>
-                     </div>
-                        `,
-        attributes: {
-          title: "3-Columns",
-        },
-      });
 
 editor.Panels.addPanel({
   id: "panel-top",
