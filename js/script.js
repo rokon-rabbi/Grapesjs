@@ -1,9 +1,6 @@
 const editor = grapesjs.init({
   // Indicate where to init the editor. You can also pass an HTMLElement
   container: "#gjs",
-  layerManager: {
-    appendTo: ".layers-container",
-  },
   // Get the content for the canvas directly from the element
   // As an alternative we could use: `components: '<h1>Hello World Component!</h1>'`,
   fromElement: true,
@@ -13,7 +10,9 @@ const editor = grapesjs.init({
   // Disable the storage manager for the moment
   storageManager: false,
   // Avoid any default panel
-
+  layerManager: {
+    appendTo: ".layers-container",
+  },
   panels: {
     defaults: [
       {
@@ -34,7 +33,53 @@ const editor = grapesjs.init({
       },
     ],
   },
-  // ...block manager
+  selectorManager: {
+    appendTo: ".styles-container",
+  },
+  styleManager: {
+    appendTo: ".styles-container",
+    sectors: [
+      {
+        name: "Dimension",
+        open: false,
+        // Use built-in properties
+        buildProps: ["width", "min-height", "padding"],
+        // Use `properties` to define/override single property
+        properties: [
+          {
+            // Type of the input,
+            // options: integer | radio | select | color | slider | file | composite | stack
+            type: "integer",
+            name: "The width", // Label for the property
+            property: "width", // CSS property (if buildProps contains it will be extended)
+            units: ["px", "%"], // Units, available only for 'integer' types
+            defaults: "auto", // Default value
+            min: 0, // Min value, available only for 'integer' types
+          },
+        ],
+      },
+      {
+        name: "Extra",
+        open: false,
+        buildProps: ["background-color", "box-shadow", "custom-prop"],
+        properties: [
+          {
+            id: "custom-prop",
+            name: "Custom Label",
+            property: "font-size",
+            type: "select",
+            defaults: "32px",
+            // List of options, available only for 'select' and 'radio'  types
+            options: [
+              { value: "12px", name: "Tiny" },
+              { value: "18px", name: "Medium" },
+              { value: "32px", name: "Big" },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   blockManager: {
     appendTo: "#blocks",
     blocks: [
@@ -43,9 +88,9 @@ const editor = grapesjs.init({
         label: "<b>Section</b>", // You can use HTML/SVG inside labels
         attributes: { class: "gjs-block-section" },
         content: `<section>
-          <h1>This is a simple title</h1>
-          <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
-        </section>`,
+    <h1>This is a simple title</h1>
+    <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
+  </section>`,
       },
       {
         id: "text",
@@ -67,46 +112,64 @@ const editor = grapesjs.init({
     ],
   },
 });
-
-// custom blocks 3 columns
 editor.BlockManager.add("3-Columns", {
   label: "3 Columns",
   content: `<style>
-                  .gjs-row{
-                      display:flex;
-                      justify-content:flex-start;
-                      align-items:stretch;
-                      flex-wrap:nowrap;
-                      padding:10px;
-                    }
-                    .gjs-cell{
-                      min-height:75px;
-                      flex-grow:1;
-                      flex-basis:100%;
-                    }
-                    @media (max-width: 768px){
-                      .gjs-row{
-                        flex-wrap:wrap;
-                      }
-                    }
-                  </style>
-              <div data-gjs-type="default"  class="gjs-row">
-                <div data-gjs-type="default" class="gjs-cell">
-                </div>
-                <div data-gjs-type="default" class="gjs-cell">
-                 </div>
-               <div data-gjs-type="default" class="gjs-cell">
-                </div>
-               </div>
-                  `,
+            .gjs-row{
+                display:flex;
+                justify-content:flex-start;
+                align-items:stretch;
+                flex-wrap:nowrap;
+                padding:10px;
+              }
+              .gjs-cell{
+                min-height:75px;
+                flex-grow:1;
+                flex-basis:100%;
+              }
+              @media (max-width: 768px){
+                .gjs-row{
+                  flex-wrap:wrap;
+                }
+              }
+            </style>
+        <div data-gjs-type="default"  class="gjs-row">
+          <div data-gjs-type="default" class="gjs-cell">
+          </div>
+          <div data-gjs-type="default" class="gjs-cell">
+           </div>
+         <div data-gjs-type="default" class="gjs-cell">
+          </div>
+         </div>
+            `,
   attributes: {
     title: "A block",
   },
 });
-
 editor.Panels.addPanel({
   id: "panel-top",
   el: ".panel__top",
+});
+editor.Panels.addPanel({
+  id: "panel-switcher",
+  el: ".panel__switcher",
+  buttons: [
+    {
+      id: "show-layers",
+      active: true,
+      label: "Layers",
+      command: "show-layers",
+      // Once activated disable the possibility to turn it off
+      togglable: false,
+    },
+    {
+      id: "show-style",
+      active: true,
+      label: "Styles",
+      command: "show-styles",
+      togglable: false,
+    },
+  ],
 });
 editor.Panels.addPanel({
   id: "basic-actions",
@@ -126,7 +189,6 @@ editor.Panels.addPanel({
       command: "export-template",
       context: "export-template", // For grouping context of buttons from the same panel
     },
-
     {
       id: "show-json",
       className: "btn-show-json",
@@ -144,11 +206,3 @@ editor.Panels.addPanel({
     },
   ],
 });
-editor.on("run:export-template:before", opts => {
-  console.log("Before the command run");
-  if (0 /* some condition */) {
-    opts.abort = 1;
-  }
-});
-editor.on("run:export-template", () => console.log("After the command run"));
-editor.on("abort:export-template", () => console.log("Command aborted"));
