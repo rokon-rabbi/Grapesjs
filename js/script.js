@@ -206,3 +206,46 @@ editor.Panels.addPanel({
     },
   ],
 });
+// commands
+editor.on("run:export-template:before", opts => {
+  console.log("Before the command run");
+  if (0 /* some condition */) {
+    opts.abort = 1;
+  }
+});
+editor.on("run:export-template", () => console.log("After the command run"));
+editor.on("abort:export-template", () => console.log("Command aborted"));
+editor.Commands.add("show-layers", {
+  getRowEl(editor) {
+    return editor.getContainer().closest(".editor-row");
+  },
+  getLayersEl(row) {
+    return row.querySelector(".layers-container");
+  },
+
+  run(editor, sender) {
+    const lmEl = this.getLayersEl(this.getRowEl(editor));
+    lmEl.style.display = "";
+  },
+  stop(editor, sender) {
+    const lmEl = this.getLayersEl(this.getRowEl(editor));
+    lmEl.style.display = "none";
+  },
+});
+editor.Commands.add("show-styles", {
+  getRowEl(editor) {
+    return editor.getContainer().closest(".editor-row");
+  },
+  getStyleEl(row) {
+    return row.querySelector(".styles-container");
+  },
+
+  run(editor, sender) {
+    const smEl = this.getStyleEl(this.getRowEl(editor));
+    smEl.style.display = "";
+  },
+  stop(editor, sender) {
+    const smEl = this.getStyleEl(this.getRowEl(editor));
+    smEl.style.display = "none";
+  },
+});
