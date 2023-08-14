@@ -10,11 +10,13 @@ const editor = grapesjs.init({
   // Disable the storage manager for the moment
   storageManager: false,
   // Avoid any default panel
+  // layer manager 
   layerManager: {
     appendTo: ".layers-container",
   },
   panels: {
     defaults: [
+      
       {
         id: "layers",
         el: ".panel__right",
@@ -31,10 +33,15 @@ const editor = grapesjs.init({
           keyWidth: "flex-basis",
         },
       },
+    
     ],
   },
+
   selectorManager: {
     appendTo: ".styles-container",
+  },
+  traitManager: {
+    appendTo: '.traits-container',
   },
   styleManager: {
     appendTo: ".styles-container",
@@ -80,6 +87,7 @@ const editor = grapesjs.init({
       },
     ],
   },
+//  blockManager 
   blockManager: {
     appendTo: "#blocks",
     blocks: [
@@ -111,7 +119,9 @@ const editor = grapesjs.init({
       },
     ],
   },
+  
 });
+// three column custom blocks 
 editor.BlockManager.add("3-Columns", {
   label: "3 Columns",
   content: `<style>
@@ -146,10 +156,12 @@ editor.BlockManager.add("3-Columns", {
     title: "A block",
   },
 });
+// pannel top 
 editor.Panels.addPanel({
   id: "panel-top",
   el: ".panel__top",
 });
+// pannel switchr 
 editor.Panels.addPanel({
   id: "panel-switcher",
   el: ".panel__switcher",
@@ -162,6 +174,7 @@ editor.Panels.addPanel({
       // Once activated disable the possibility to turn it off
       togglable: false,
     },
+
     {
       id: "show-style",
       active: true,
@@ -169,8 +182,16 @@ editor.Panels.addPanel({
       command: "show-styles",
       togglable: false,
     },
+    {
+      id: 'show-traits',
+      active: true,
+      label: 'Traits',
+      command: 'show-traits',
+      togglable: false,
+  },
   ],
 });
+// basic actions 
 editor.Panels.addPanel({
   id: "basic-actions",
   el: ".panel__basic-actions",
@@ -206,7 +227,22 @@ editor.Panels.addPanel({
     },
   ],
 });
+// traits
+editor.Panels.addPanel({
+  id: 'panel-switcher',
+  el: '.panel__switcher',
+  buttons: [
+    // ...
+    {
+      id: 'show-traits',
+      active: true,
+      label: 'Traits',
+      command: 'show-traits',
+      togglable: false,
+  }],
+});
 // commands
+// export code 
 editor.on("run:export-template:before", opts => {
   console.log("Before the command run");
   if (0 /* some condition */) {
@@ -247,5 +283,18 @@ editor.Commands.add("show-styles", {
   stop(editor, sender) {
     const smEl = this.getStyleEl(this.getRowEl(editor));
     smEl.style.display = "none";
+  },
+});
+// traits
+editor.Commands.add('show-traits', {
+  getTraitsEl(editor) {
+    const row = editor.getContainer().closest('.editor-row');
+    return row.querySelector('.traits-container');
+  },
+  run(editor, sender) {
+    this.getTraitsEl(editor).style.display = '';
+  },
+  stop(editor, sender) {
+    this.getTraitsEl(editor).style.display = 'none';
   },
 });
