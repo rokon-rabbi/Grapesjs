@@ -54,4 +54,7 @@
     .panel__switcher {
       position: initial;
     }
-  
+  /* pannel device css */
+  .panel__devices {
+    position: initial;
+  }

@@ -10,13 +10,9 @@ const editor = grapesjs.init({
   // Disable the storage manager for the moment
   storageManager: false,
   // Avoid any default panel
-  // layer manager 
-  layerManager: {
-    appendTo: ".layers-container",
-  },
+
   panels: {
     defaults: [
-      
       {
         id: "layers",
         el: ".panel__right",
@@ -33,16 +29,17 @@ const editor = grapesjs.init({
           keyWidth: "flex-basis",
         },
       },
-    
     ],
   },
 
   selectorManager: {
     appendTo: ".styles-container",
   },
+  // traitManager
   traitManager: {
-    appendTo: '.traits-container',
+    appendTo: ".traits-container",
   },
+  // styleManager
   styleManager: {
     appendTo: ".styles-container",
     sectors: [
@@ -87,7 +84,7 @@ const editor = grapesjs.init({
       },
     ],
   },
-//  blockManager 
+  //  blockManager
   blockManager: {
     appendTo: "#blocks",
     blocks: [
@@ -119,9 +116,27 @@ const editor = grapesjs.init({
       },
     ],
   },
-  
+  // layer manager
+  layerManager: {
+    appendTo: ".layers-container",
+  },
+  // device manager
+  deviceManager: {
+    devices: [
+      {
+        name: "Desktop",
+        width: "",
+        widthMedia: "1024",
+      },
+      {
+        name: "Mobile",
+        width: "320",
+        widthMedia: "", // this value will be used in CSS @media
+      },
+    ],
+  },
 });
-// three column custom blocks 
+// three column custom blocks
 editor.BlockManager.add("3-Columns", {
   label: "3 Columns",
   content: `<style>
@@ -156,12 +171,12 @@ editor.BlockManager.add("3-Columns", {
     title: "A block",
   },
 });
-// pannel top 
+// pannel top
 editor.Panels.addPanel({
   id: "panel-top",
   el: ".panel__top",
 });
-// pannel switchr 
+// pannel switchr
 editor.Panels.addPanel({
   id: "panel-switcher",
   el: ".panel__switcher",
@@ -183,15 +198,15 @@ editor.Panels.addPanel({
       togglable: false,
     },
     {
-      id: 'show-traits',
+      id: "show-traits",
       active: true,
-      label: 'Traits',
-      command: 'show-traits',
+      label: "Traits",
+      command: "show-traits",
       togglable: false,
-  },
+    },
   ],
 });
-// basic actions 
+// basic actions
 editor.Panels.addPanel({
   id: "basic-actions",
   el: ".panel__basic-actions",
@@ -215,34 +230,85 @@ editor.Panels.addPanel({
       className: "btn-show-json",
       label: "JSON",
       context: "show-json",
+
       command(editor) {
         editor.Modal.setTitle("Components JSON")
           .setContent(
             `<textarea style="width:100%; height: 250px;">
       ${JSON.stringify(editor.getComponents())}
+      
     </textarea>`
           )
           .open();
+        // console.log(JSON.stringify(editor.getComponents()));
+      },
+    },
+    // pannel button for download json
+    {
+      id: "download-json",
+      className: "btn-show-json",
+      label: "Download-JSON",
+      context: "download-json",
+
+      command(editor) {
+        const jsonContent = JSON.stringify(editor.getComponents(), null, 2);
+
+        // Function to download the JSON content as a TXT file
+        function downloadJSONAsTXT(content, fileName) {
+          const blob = new Blob([content], { type: "text/plain" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = fileName || "data.txt";
+          a.textContent = "Download JSON";
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+
+        // Download the JSON content
+        downloadJSONAsTXT(jsonContent, "components.json");
+        // console.log(JSON.stringify(editor.getComponents()));
       },
     },
   ],
 });
 // traits
 editor.Panels.addPanel({
-  id: 'panel-switcher',
-  el: '.panel__switcher',
+  id: "panel-switcher",
+  el: ".panel__switcher",
   buttons: [
     // ...
     {
-      id: 'show-traits',
+      id: "show-traits",
       active: true,
-      label: 'Traits',
-      command: 'show-traits',
+      label: "Traits",
+      command: "show-traits",
       togglable: false,
-  }],
+    },
+  ],
+});
+// device pannel
+editor.Panels.addPanel({
+  id: "panel-devices",
+  el: ".panel__devices",
+  buttons: [
+    {
+      id: "device-desktop",
+      label: "D",
+      command: "set-device-desktop",
+      active: true,
+      togglable: false,
+    },
+    {
+      id: "device-mobile",
+      label: "M",
+      command: "set-device-mobile",
+      togglable: false,
+    },
+  ],
 });
 // commands
-// export code 
+// export code
 editor.on("run:export-template:before", opts => {
   console.log("Before the command run");
   if (0 /* some condition */) {
@@ -286,15 +352,22 @@ editor.Commands.add("show-styles", {
   },
 });
 // traits
-editor.Commands.add('show-traits', {
+editor.Commands.add("show-traits", {
   getTraitsEl(editor) {
-    const row = editor.getContainer().closest('.editor-row');
-    return row.querySelector('.traits-container');
+    const row = editor.getContainer().closest(".editor-row");
+    return row.querySelector(".traits-container");
   },
   run(editor, sender) {
-    this.getTraitsEl(editor).style.display = '';
+    this.getTraitsEl(editor).style.display = "";
   },
   stop(editor, sender) {
-    this.getTraitsEl(editor).style.display = 'none';
+    this.getTraitsEl(editor).style.display = "none";
   },
+});
+// commands for device manager
+editor.Commands.add("set-device-desktop", {
+  run: editor => editor.setDevice("Desktop"),
+});
+editor.Commands.add("set-device-mobile", {
+  run: editor => editor.setDevice("Mobile"),
 });
