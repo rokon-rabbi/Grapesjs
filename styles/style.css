@@ -3,10 +3,35 @@
       margin: 0;
       padding: 0;
     }
-    #gjs {
+    /* #gjs {
       border: 3px solid #444;
+    } */
+    #gjs {
+      border: none;
     }
-
+    /* Theming */
+    
+    /* Primary color for the background */
+    .gjs-one-bg {
+      /* background-color: #78366a; */
+    }
+    
+    /* Secondary color for the text color */
+    .gjs-two-color {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    /* Tertiary color for the background */
+    .gjs-three-bg {
+      /* background-color: #ec5896; */
+      color: white;
+    }
+    
+    /* Quaternary color for the text color */
+    .gjs-four-color,
+    .gjs-four-color-h:hover {
+      color: #ec5896;
+    }
     /* Reset some default styling */
     .gjs-cv-canvas {
       top: 0;
@@ -39,7 +64,7 @@
       justify-content: flex-start;
       align-items: stretch;
       flex-wrap: nowrap;
-      height: 300px;
+      height: 100%;
     }
 
     .editor-canvas {
