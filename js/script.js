@@ -268,6 +268,7 @@ editor.Panels.addPanel({
     },
     {
       id: "export",
+      title: "export",
       className: "btn-open-export",
       label: `<svg style="display: block; max-width:22px" viewBox="0 0 24 24">
       <path fill="currentColor" d="M12.89,3L14.85,3.4L11.11,21L9.15,20.6L12.89,3M19.59,12L16,8.41V5.58L22.42,12L16,18.41V15.58L19.59,12M1.58,12L8,5.58V8.41L4.41,12L8,15.58V18.41L1.58,12Z"></path>
@@ -327,6 +328,15 @@ editor.Panels.addPanel({
       label: `<svg style="display: block; max-width:22px" viewBox="0 0 24 24"><path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg>`,
       command: "preview",
     },
+    // html css
+    {
+      id: "downloadHtml",
+      title: "HtmlCss",
+      className: "btn-open-export",
+      label: "html",
+      command: "htmlCss",
+      // For grouping context of buttons from the same panel
+    },
   ],
 });
 
@@ -364,6 +374,7 @@ editor.on("run:export-template:before", opts => {
 });
 editor.on("run:export-template", () => console.log("After the command run"));
 editor.on("abort:export-template", () => console.log("Command aborted"));
+
 editor.Commands.add("show-layers", {
   getRowEl(editor) {
     return editor.getContainer().closest(".editor-row");
@@ -431,3 +442,33 @@ editor.Commands.add("set-device-desktop", {
 editor.Commands.add("set-device-mobile", {
   run: editor => editor.setDevice("Mobile"),
 });
+editor.Commands.add("htmlCss", {
+  run: editor => {
+    const editorHtml = editor.getHtml();
+    const editorCss = editor.getCss();
+
+    // Create a new window or tab
+    const newWindow = window.open("", "_blank");
+
+    // Write the HTML and CSS content to the new window
+    if (newWindow) {
+      newWindow.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          ${editorCss}
+        </style>
+      </head>
+      <body>
+        ${editorHtml}
+      </body>
+      </html>
+    `);
+    } else {
+      console.error("Popup blocked. Make sure to allow popups on this site.");
+    }
+  },
+});
+// let htmlWithcss = editor.Commands.run("gjs-get-inlined-html");
+// console.log(htmlWithcss);
