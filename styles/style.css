@@ -83,3 +83,10 @@
   .panel__devices {
     position: initial;
   }
+  /* .block{
+    position: absolute;
+    z-index: 3;
+    top: 100px;
+    right: 0px;
+
+  } */

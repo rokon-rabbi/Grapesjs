@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+</head>
+<body>
+        <div id="main">
+                
+                
+        </div>
+        <script>
+                let localHTML = localStorage.getItem('grapeJsHTML');
+                let xrender = localHTML.length? localHTML : `<h3>NO CONTENT FOUND!</h3>`;
+                document.getElementById('main').innerHTML = xrender;
+        </script>
+</body>
+</html>
