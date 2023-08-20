@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-</head>
-<body>
-        <div id="main">
-                
-                
-        </div>
-        <script>
-                let localHTML = localStorage.getItem('grapeJsHTML');
-                let xrender = localHTML.length? localHTML : `<h3>NO CONTENT FOUND!</h3>`;
-                document.getElementById('main').innerHTML = xrender;
-        </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  
+  <body>
+    <div id="main"></div>
+    <script>
+      let localHTML = localStorage.getItem("Html");
+      let localCss = localStorage.getItem("Css");
+
+      let xrender = localHTML.length ? localHTML : `<h3>NO CONTENT FOUND!</h3>`;
+      document.getElementById("main").innerHTML = xrender;
+      const styleElement = document.createElement("style");
+      console.log(localCss);
+      styleElement.textContent = localCss;
+      console.log(document.head.appendChild(styleElement));
+      document.head.appendChild(styleElement);
+    </script>
+  </body>
 </html>

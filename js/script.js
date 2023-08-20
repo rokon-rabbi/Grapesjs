@@ -88,7 +88,7 @@ const editor = grapesjs.init({
   //  blockManager
   blockManager: {
     appendTo: ".blocks-container",
-    className:".block",
+    
     blocks: [
       {
         id: "section", // id is mandatory
@@ -448,31 +448,9 @@ editor.Commands.add("htmlCss", {
     const editorHtml = editor.getHtml();
     const editorCss = editor.getCss();
     const combinedHtmlCss = `<style>${editorCss}</style>${editorHtml}`;
-
-    // Log both HTML and CSS together
-    console.log(combinedHtmlCss);
-    let localHTML = localStorage.setItem('grapeJsHTML');
-    // Create a new window or tab
-    const newWindow = window.open("", "_blank");
-
-    // Write the HTML and CSS content to the new window
-    if (newWindow) {
-      newWindow.document.write(`
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <style>
-          ${editorCss}
-        </style>
-      </head>
-      <body>
-        ${editorHtml}
-      </body>
-      </html>
-    `);
-    } else {
-      console.error("Popup blocked. Make sure to allow popups on this site.");
-    }
+    localStorage.setItem("Html", editorHtml);
+    localStorage.setItem("Css", editorCss);
+    window.open("../webpage.html", "_blank");
   },
 });
 // let htmlWithcss = editor.Commands.run("gjs-get-inlined-html");
