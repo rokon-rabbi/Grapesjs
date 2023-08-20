@@ -36,10 +36,6 @@ const editor = grapesjs.init({
   selectorManager: {
     appendTo: ".styles-container",
   },
-  // traitManager
-  traitManager: {
-    appendTo: ".traits-container",
-  },
   // styleManager
   styleManager: {
     appendTo: ".styles-container",
@@ -87,8 +83,8 @@ const editor = grapesjs.init({
   },
   //  blockManager
   blockManager: {
-    appendTo: ".blocks-container",
-    
+    appendTo: "#blocks",
+    className: ".block",
     blocks: [
       {
         id: "section", // id is mandatory
@@ -129,20 +125,20 @@ const editor = grapesjs.init({
     appendTo: ".layers-container",
   },
   // device manager
-  deviceManager: {
-    devices: [
-      {
-        name: "Desktop",
-        width: "",
-        widthMedia: "1024",
-      },
-      {
-        name: "Mobile",
-        width: "320",
-        widthMedia: "", // this value will be used in CSS @media
-      },
-    ],
-  },
+  // deviceManager: {
+  //   devices: [
+  //     {
+  //       name: "Desktop",
+  //       width: "",
+  //       widthMedia: "1024",
+  //     },
+  //     {
+  //       name: "Mobile",
+  //       width: "320",
+  //       widthMedia: "", // this value will be used in CSS @media
+  //     },
+  //   ],
+  // },
   // storage manager
   storageManager: {
     type: "local", // Type of the storage, available: 'local' | 'remote'
@@ -427,7 +423,7 @@ editor.Commands.add("show-traits", {
 editor.Commands.add("show-blocks", {
   getTraitsEl(editor) {
     const row = editor.getContainer().closest(".editor-row");
-    return row.querySelector(".blocks-container");
+    return row.querySelector("#blocks");
   },
   run(editor, sender) {
     this.getTraitsEl(editor).style.display = "";
