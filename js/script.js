@@ -125,20 +125,20 @@ const editor = grapesjs.init({
     appendTo: ".layers-container",
   },
   // device manager
-  // deviceManager: {
-  //   devices: [
-  //     {
-  //       name: "Desktop",
-  //       width: "",
-  //       widthMedia: "1024",
-  //     },
-  //     {
-  //       name: "Mobile",
-  //       width: "320",
-  //       widthMedia: "", // this value will be used in CSS @media
-  //     },
-  //   ],
-  // },
+  deviceManager: {
+    devices: [
+      {
+        name: "Desktop",
+        width: "",
+        widthMedia: "",
+      },
+      {
+        name: "Mobile",
+        width: "320",
+        widthMedia: "", // this value will be used in CSS @media
+      },
+    ],
+  },
   // storage manager
   storageManager: {
     type: "local", // Type of the storage, available: 'local' | 'remote'
