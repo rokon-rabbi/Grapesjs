@@ -441,13 +441,16 @@ editor.Commands.add("set-device-mobile", {
 });
 editor.Commands.add("htmlCss", {
   run: editor => {
-    const editorHtml = editor.getHtml();
-    const editorCss = editor.getCss();
-    const combinedHtmlCss = `<style>${editorCss}</style>${editorHtml}`;
-    localStorage.setItem("Html", editorHtml);
-    localStorage.setItem("Css", editorCss);
     window.open("../webpage.html", "_blank");
   },
 });
+
+setInterval(() => {
+  let editorHtml = editor.getHtml();
+  let editorCss = editor.getCss();
+  localStorage.setItem("Html", editorHtml);
+  localStorage.setItem("Css", editorCss);
+}, 1000);
+
 // let htmlWithcss = editor.Commands.run("gjs-get-inlined-html");
 // console.log(htmlWithcss);
