@@ -330,7 +330,7 @@ editor.Panels.addPanel({
       id: "downloadHtml",
       title: "HtmlCss",
       className: "btn-open-export",
-      label: "html",
+      label: "HTML",
       command: "htmlCss",
       // For grouping context of buttons from the same panel
     },
@@ -441,7 +441,7 @@ editor.Commands.add("set-device-mobile", {
 });
 editor.Commands.add("htmlCss", {
   run: editor => {
-    window.open("../webpage.html", "_blank");
+    window.open("./webpage.html", "_blank");
   },
 });
 
