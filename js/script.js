@@ -444,13 +444,12 @@ editor.Commands.add("htmlCss", {
     window.open("./webpage.html", "_blank");
   },
 });
-
-setInterval(() => {
+editor.on("update", function () {
   let editorHtml = editor.getHtml();
   let editorCss = editor.getCss();
   localStorage.setItem("Html", editorHtml);
   localStorage.setItem("Css", editorCss);
-}, 1000);
+});
 
 // let htmlWithcss = editor.Commands.run("gjs-get-inlined-html");
 // console.log(htmlWithcss);
