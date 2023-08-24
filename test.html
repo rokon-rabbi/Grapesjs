@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function renderJsonToHtml(jsonData) {
+        if (Array.isArray(jsonData)) {
+          const ul = document.createElement("ul");
+
+          for (const item of jsonData) {
+            const li = document.createElement("li");
+
+            li.appendChild(renderJsonToHtml(item));
+
+            ul.appendChild(li);
+          }
+
+          return ul;
+        } else if (typeof jsonData === "object" && jsonData !== null) {
+          const div = document.createElement("div");
+          for (const key in jsonData) {
+            const p = document.createElement("p");
+
+            p.innerHTML = `${key}: ${
+              renderJsonToHtml(jsonData[key]).outerHTML
+            }`;
+            div.appendChild(p);
+          }
+          return div;
+        } else {
+          const span = document.createElement("span");
+
+          span.textContent = jsonData;
+
+          return span;
+        }
+      }
+
+      const jsonData = [
+        {
+          tagName: "h1",
+          type: "text",
+          components: [{ type: "textnode", content: "Hello components" }],
+        },
+      ];
+
+      const htmlElement = renderJsonToHtml(jsonData);
+      document.body.appendChild(htmlElement);
+    </script>
+  </body>
+</html>
