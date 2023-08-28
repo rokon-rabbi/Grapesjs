@@ -450,6 +450,3 @@ editor.on("update", function () {
   localStorage.setItem("Html", editorHtml);
   localStorage.setItem("Css", editorCss);
 });
-
-// let htmlWithcss = editor.Commands.run("gjs-get-inlined-html");
-// console.log(htmlWithcss);

@@ -13,12 +13,13 @@
     
     /* Primary color for the background */
     .gjs-one-bg {
-      /* background-color: #78366a; */
+      background-color:#f3f3f3;
     }
     
     /* Secondary color for the text color */
     .gjs-two-color {
-      color: rgba(255, 255, 255, 0.7);
+      /* color: rgba(255, 255, 255, 0.7); */
+      color: rgb(92, 92, 92);
     }
     
     /* Tertiary color for the background */
