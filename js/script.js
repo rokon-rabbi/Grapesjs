@@ -337,6 +337,10 @@ const editor = grapesjs.init({
   traitManager: {
     appendTo: ".traits-container",
   },
+  jsManager: {
+    appendTo: ".js-container",
+    
+  },
   //  blockManager
   blockManager: {
     appendTo: "#blocks",
@@ -563,6 +567,13 @@ editor.Panels.addPanel({
       togglable: false,
     },
     {
+      id: "show-js",
+      active: true,
+      label: "js",
+      command: "show-js",
+      togglable: false,
+    },
+    {
       id: "show-blocks",
       active: true,
       label: `<svg style="display: block; max-width:22px" viewBox="0 0 24 24">
@@ -658,6 +669,7 @@ editor.Panels.addPanel({
       command: "htmlCss",
       // For grouping context of buttons from the same panel
     },
+    
   ],
 });
 
@@ -683,6 +695,7 @@ editor.Panels.addPanel({
       command: "set-device-mobile",
       togglable: false,
     },
+    
   ],
 });
 // commands
@@ -730,7 +743,24 @@ editor.Commands.add("show-styles", {
     smEl.style.display = "none";
   },
 });
+// js 
+editor.Commands.add("show-js", {
+  getRowEl(editor) {
+    return editor.getContainer().closest(".editor-row");
+  },
+  getStyleEl(row) {
+    return row.querySelector(".js-container");
+  },
 
+  run(editor, sender) {
+    const smEl = this.getStyleEl(this.getRowEl(editor));
+    smEl.style.display = "";
+  },
+  stop(editor, sender) {
+    const smEl = this.getStyleEl(this.getRowEl(editor));
+    smEl.style.display = "none";
+  },
+});
 
 // commans for trait container
 editor.Commands.add("show-traits", {
@@ -747,19 +777,7 @@ editor.Commands.add("show-traits", {
   
 });
 
-// traits
-editor.Commands.add("show-traits", {
-  getTraitsEl(editor) {
-    const row = editor.getContainer().closest(".editor-row");
-    return row.querySelector(".traits-container");
-  },
-  run(editor, sender) {
-    this.getTraitsEl(editor).style.display = "";
-  },
-  stop(editor, sender) {
-    this.getTraitsEl(editor).style.display = "none";
-  },
-});
+
 // blocks
 editor.Commands.add("show-blocks", {
   getTraitsEl(editor) {
