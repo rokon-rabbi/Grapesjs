@@ -35,6 +35,7 @@ const editor = grapesjs.init({
   selectorManager: {
     appendTo: ".styles-container",
   },
+  
   // styleManager
   styleManager: {
     appendTo: ".styles-container",
@@ -333,6 +334,9 @@ const editor = grapesjs.init({
       },
     ],
   },
+  traitManager: {
+    appendTo: ".traits-container",
+  },
   //  blockManager
   blockManager: {
     appendTo: "#blocks",
@@ -414,6 +418,35 @@ const editor = grapesjs.init({
         },
       },
     ],
+  },
+});
+// for input fields traits
+editor.DomComponents.addType('input', {
+  isComponent: el => el.tagName == 'INPUT',
+  model: {
+    defaults: {
+      traits: [
+        // Strings are automatically converted to text types
+        'name', // Same as: { type: 'text', name: 'name' }
+        'placeholder',
+        {
+          type: 'select', // Type of the trait
+          label: 'Type', // The label you will see in Settings
+          name: 'type', // The name of the attribute/property to use on component
+          options: [
+            { id: 'text', name: 'Text'},
+            { id: 'email', name: 'Email'},
+            { id: 'password', name: 'Password'},
+            { id: 'number', name: 'Number'},
+          ]
+        }, {
+          type: 'checkbox',
+          name: 'required',
+      }],
+      // As by default, traits are binded to attributes, so to define
+      // their initial value we can use attributes
+      attributes: { type: 'text', required: true },
+    },
   },
 });
 // three column custom blocks
@@ -522,13 +555,13 @@ editor.Panels.addPanel({
       command: "show-styles",
       togglable: false,
     },
-    // {
-    //   id: "show-traits",
-    //   active: true,
-    //   label: "Traits",
-    //   command: "show-traits",
-    //   togglable: false,
-    // },
+    {
+      id: "show-traits",
+      active: true,
+      label: "Traits",
+      command: "show-traits",
+      togglable: false,
+    },
     {
       id: "show-blocks",
       active: true,
@@ -697,6 +730,23 @@ editor.Commands.add("show-styles", {
     smEl.style.display = "none";
   },
 });
+
+
+// commans for trait container
+editor.Commands.add("show-traits", {
+  getTraitsEl(editor) {
+    const row = editor.getContainer().closest(".editor-row");
+    return row.querySelector(".traits-container");
+  },
+  run(editor, sender) {
+    this.getTraitsEl(editor).style.display = "";
+  },
+  stop(editor, sender) {
+    this.getTraitsEl(editor).style.display = "none";
+  },
+  
+});
+
 // traits
 editor.Commands.add("show-traits", {
   getTraitsEl(editor) {
@@ -723,6 +773,7 @@ editor.Commands.add("show-blocks", {
     this.getTraitsEl(editor).style.display = "none";
   },
 });
+
 // commands for device manager
 editor.Commands.add("set-device-desktop", {
   run: editor => editor.setDevice("Desktop"),
@@ -741,3 +792,5 @@ editor.on("update", function () {
   localStorage.setItem("Html", editorHtml);
   localStorage.setItem("Css", editorCss);
 });
+
+
