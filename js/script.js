@@ -35,7 +35,7 @@ const editor = grapesjs.init({
   selectorManager: {
     appendTo: ".styles-container",
   },
-  
+
   // styleManager
   styleManager: {
     appendTo: ".styles-container",
@@ -339,47 +339,15 @@ const editor = grapesjs.init({
   },
   jsManager: {
     appendTo: ".js-container",
-    
   },
   //  blockManager
   blockManager: {
     appendTo: "#blocks",
     className: ".block",
-    blocks: [
-      {
-        id: "section", // id is mandatory
-        label: `<svg viewBox="0 0 24 24">
-        <path fill="currentColor" d="M21,6V8H3V6H21M3,18H12V16H3V18M3,13H21V11H3V13Z"></path>
-    </svg>`, // You can use HTML/SVG inside labels
-        attributes: { class: "gjs-block-section" },
-        content: `<section>
-    <h1>This is a simple title</h1>
-    <div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
-  </section>`,
-      },
-      {
-        id: "text",
-        label: `<svg viewBox="0 0 24 24">
-        <path fill="currentColor" d="M18.5,4L19.66,8.35L18.7,8.61C18.25,7.74 17.79,6.87 17.26,6.43C16.73,6 16.11,6 15.5,6H13V16.5C13,17 13,17.5 13.33,17.75C13.67,18 14.33,18 15,18V19H9V18C9.67,18 10.33,18 10.67,17.75C11,17.5 11,17 11,16.5V6H8.5C7.89,6 7.27,6 6.74,6.43C6.21,6.87 5.75,7.74 5.3,8.61L4.34,8.35L5.5,4H18.5Z"></path>
-      </svg>`,
-        content: '<div data-gjs-type="text">Insert your text here</div>',
-      },
-      {
-        id: "image",
-        label: `<svg viewBox="0 0 24 24">
-        <path fill="currentColor" d="M21,3H3C2,3 1,4 1,5V19A2,2 0 0,0 3,21H21C22,21 23,20 23,19V5C23,4 22,3 21,3M5,17L8.5,12.5L11,15.5L14.5,11L19,17H5Z"></path>
-      </svg>`,
-        // Select the component once it's dropped
-        select: true,
-        // You can pass components as a JSON instead of a simple HTML string,
-        // in this case we also use a defined component type `image`
-        content: { type: "image" },
-        // This triggers `active` event on dropped components and the `image`
-        // reacts by opening the AssetManager
-        activate: true,
-      },
-    ],
+
+    blocks: [],
   },
+
   // layer manager
   layerManager: {
     appendTo: ".layers-container",
@@ -424,40 +392,64 @@ const editor = grapesjs.init({
     ],
   },
 });
-// for input fields traits
-editor.DomComponents.addType('input', {
-  isComponent: el => el.tagName == 'INPUT',
-  model: {
-    defaults: {
-      traits: [
-        // Strings are automatically converted to text types
-        'name', // Same as: { type: 'text', name: 'name' }
-        'placeholder',
-        {
-          type: 'select', // Type of the trait
-          label: 'Type', // The label you will see in Settings
-          name: 'type', // The name of the attribute/property to use on component
-          options: [
-            { id: 'text', name: 'Text'},
-            { id: 'email', name: 'Email'},
-            { id: 'password', name: 'Password'},
-            { id: 'number', name: 'Number'},
-          ]
-        }, {
-          type: 'checkbox',
-          name: 'required',
-      }],
-      // As by default, traits are binded to attributes, so to define
-      // their initial value we can use attributes
-      attributes: { type: 'text', required: true },
-    },
+
+// image
+editor.BlockManager.add("image", {
+  id: "image",
+  category: "basics",
+  label: `<svg viewBox="0 0 24 24">
+        <path fill="currentColor" d="M21,3H3C2,3 1,4 1,5V19A2,2 0 0,0 3,21H21C22,21 23,20 23,19V5C23,4 22,3 21,3M5,17L8.5,12.5L11,15.5L14.5,11L19,17H5Z"></path>
+      </svg>`,
+  // Select the component once it's dropped
+  select: true,
+  // You can pass components as a JSON instead of a simple HTML string,
+  // in this case we also use a defined component type `image`
+  content: { type: "image" },
+  // This triggers `active` event on dropped components and the `image`
+  // reacts by opening the AssetManager
+  activate: true,
+
+  attributes: {
+    title: "image",
   },
 });
+// text
+editor.BlockManager.add("text", {
+  id: "text",
+  category: "basics",
+  label: `<svg viewBox="0 0 24 24">
+        <path fill="currentColor" d="M18.5,4L19.66,8.35L18.7,8.61C18.25,7.74 17.79,6.87 17.26,6.43C16.73,6 16.11,6 15.5,6H13V16.5C13,17 13,17.5 13.33,17.75C13.67,18 14.33,18 15,18V19H9V18C9.67,18 10.33,18 10.67,17.75C11,17.5 11,17 11,16.5V6H8.5C7.89,6 7.27,6 6.74,6.43C6.21,6.87 5.75,7.74 5.3,8.61L4.34,8.35L5.5,4H18.5Z"></path>
+      </svg>`,
+  content: '<div data-gjs-type="text">Insert your text here</div>',
+
+  attributes: {
+    title: "text",
+  },
+});
+// section blocks
+editor.BlockManager.add("section", {
+  id: "section", // id is mandatory
+  category: "basics",
+  label: `<svg viewBox="0 0 24 24">
+  <path fill="currentColor" d="M21,6V8H3V6H21M3,18H12V16H3V18M3,13H21V11H3V13Z"></path>
+</svg>`, // You can use HTML/SVG inside labels
+  attributes: { class: "gjs-block-section" },
+  content: `<section>
+<h1>This is a simple title</h1>
+<div>This is just a Lorem text: Lorem ipsum dolor sit amet</div>
+</section>`,
+
+  attributes: {
+    title: "section",
+  },
+});
+
 // three column custom blocks
 editor.BlockManager.add("3-Columns", {
   label: `<svg viewBox="0 0 23 24">
   <path fill="currentColor" d="M2 20h4V4H2v16Zm-1 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1ZM17 20h4V4h-4v16Zm-1 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1ZM9.5 20h4V4h-4v16Zm-1 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1Z"></path>
 </svg>`,
+  category: "basics",
   content: `<style>
             .gjs-row{
                 display:flex;
@@ -490,9 +482,11 @@ editor.BlockManager.add("3-Columns", {
     title: "A block",
   },
 });
+
 // form blocks
 editor.BlockManager.add("Forms", {
   label: "form",
+  category: "forms",
   content: ` <form action="index.html" method="post" >
         <input type="hidden" name="hidden-input" value="someval">
         <div class="row">
@@ -529,6 +523,47 @@ editor.BlockManager.add("Forms", {
     title: "form",
   },
 });
+// form blocks
+editor.BlockManager.add("js-block", {
+  label: "js",
+  category: "js",
+  content: ` <p>This is Javascript Magic</p>
+            `,
+  attributes: {
+    title: "js",
+  },
+});
+// for input fields traits
+editor.DomComponents.addType("input", {
+  isComponent: el => el.tagName == "INPUT",
+  model: {
+    defaults: {
+      traits: [
+        // Strings are automatically converted to text types
+        "name", // Same as: { type: 'text', name: 'name' }
+        "placeholder",
+        {
+          type: "select", // Type of the trait
+          label: "Type", // The label you will see in Settings
+          name: "type", // The name of the attribute/property to use on component
+          options: [
+            { id: "text", name: "Text" },
+            { id: "email", name: "Email" },
+            { id: "password", name: "Password" },
+            { id: "number", name: "Number" },
+          ],
+        },
+        {
+          type: "checkbox",
+          name: "required",
+        },
+      ],
+      // As by default, traits are binded to attributes, so to define
+      // their initial value we can use attributes
+      attributes: { type: "text", required: true },
+    },
+  },
+});
 // pannel top
 editor.Panels.addPanel({
   id: "panel-top",
@@ -562,15 +597,8 @@ editor.Panels.addPanel({
     {
       id: "show-traits",
       active: true,
-      label: "Traits",
+      label: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z"></path></svg>`,
       command: "show-traits",
-      togglable: false,
-    },
-    {
-      id: "show-js",
-      active: true,
-      label: "js",
-      command: "show-js",
       togglable: false,
     },
     {
@@ -669,7 +697,6 @@ editor.Panels.addPanel({
       command: "htmlCss",
       // For grouping context of buttons from the same panel
     },
-    
   ],
 });
 
@@ -695,7 +722,6 @@ editor.Panels.addPanel({
       command: "set-device-mobile",
       togglable: false,
     },
-    
   ],
 });
 // commands
@@ -743,24 +769,6 @@ editor.Commands.add("show-styles", {
     smEl.style.display = "none";
   },
 });
-// js 
-editor.Commands.add("show-js", {
-  getRowEl(editor) {
-    return editor.getContainer().closest(".editor-row");
-  },
-  getStyleEl(row) {
-    return row.querySelector(".js-container");
-  },
-
-  run(editor, sender) {
-    const smEl = this.getStyleEl(this.getRowEl(editor));
-    smEl.style.display = "";
-  },
-  stop(editor, sender) {
-    const smEl = this.getStyleEl(this.getRowEl(editor));
-    smEl.style.display = "none";
-  },
-});
 
 // commans for trait container
 editor.Commands.add("show-traits", {
@@ -774,10 +782,7 @@ editor.Commands.add("show-traits", {
   stop(editor, sender) {
     this.getTraitsEl(editor).style.display = "none";
   },
-  
 });
-
-
 // blocks
 editor.Commands.add("show-blocks", {
   getTraitsEl(editor) {
@@ -810,5 +815,38 @@ editor.on("update", function () {
   localStorage.setItem("Html", editorHtml);
   localStorage.setItem("Css", editorCss);
 });
+// Function to load Bootstrap CDN
+   // Function to load Bootstrap 5 CDN
+   function loadBootstrapCDN() {
+    // Include Bootstrap 5 JavaScript from a CDN
+    var scriptElement = document.createElement("script");
+    scriptElement.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js";
+    scriptElement.async = true;
+    document.body.appendChild(scriptElement);
+}
 
+// Function to remove Bootstrap 5 CDN
+function removeBootstrapCDN() {
+    // Remove Bootstrap 5 CSS by querying the link element
+    var linkElement = document.querySelector('link[href^="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"]');
+    if (linkElement) {
+        linkElement.remove();
+    }
 
+    // Remove Bootstrap 5 JavaScript by querying the script element
+    var scriptElement = document.querySelector('script[src^="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"]');
+    if (scriptElement) {
+        scriptElement.remove();
+    }
+}
+
+// Event listener for select element change
+document.getElementById("cdnSelect").addEventListener("change", function() {
+    var selectedValue = this.value;
+
+    if (selectedValue === "bootstrap") {
+        loadBootstrapCDN();
+    } else if (selectedValue === "none") {
+        removeBootstrapCDN();
+    }
+});

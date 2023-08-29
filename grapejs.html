@@ -17,18 +17,22 @@
   <body>
     <div class="panel__top">
       <div class="panel__basic-actions"></div>
+      <select id="cdnSelect">
+        <option value="none">None</option>
+        <option value="bootstrap">Bootstrap</option>
+      </select>
       <div class="panel__devices"></div>
       <div class="panel__switcher"></div>
     </div>
     <div class="editor-row">
       <div class="editor-canvas">
-        <div id="gjs"><h1>Hello components</h1></div>
+        <div id="gjs"><h1 class="text-white">Hello components</h1></div>
       </div>
       <div class="panel__right">
         <div class="layers-container"></div>
         <div class="styles-container"></div>
         <div class="traits-container"></div>
-        <div class="js-container"></div>
+
         <div class="blocks-container" id="blocks"></div>
       </div>
     </div>
