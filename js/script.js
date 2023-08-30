@@ -391,6 +391,10 @@ const editor = grapesjs.init({
       },
     ],
   },
+  canvas: {
+    styles: [],
+    scripts: [],
+  },
 });
 
 // image
@@ -633,7 +637,7 @@ editor.DomComponents.addType("input", {
           label: "Read-only", // Label for the checkbox trait
         },
       ],
-      
+
       // As by default, traits are bound to attributes, so to define
       // their initial value we can use attributes
       attributes: { type: "text", required: true, readonly: false }, // Set readonly to false by default
@@ -688,8 +692,6 @@ editor.Panels.addPanel({
       command: "show-blocks",
       togglable: false,
     },
-    
-  
   ],
 });
 // basic actions
@@ -819,19 +821,54 @@ editor.Panels.addPanel({
 });
 // custon select btn command
 
-const selectElement = document.getElementById("cdnSelect");
+function removeCanvasResources() {
+  // Remove the Bootstrap styles from the canvas
+  editor.Canvas.getDocument()
+    .querySelectorAll(
+      'link[href*="bootstrap@5.0.2/dist/css/bootstrap.min.css"]'
+    )
+    .forEach(styleLink => {
+      styleLink.remove();
+    });
 
-// Add an event listener to detect changes
+  // Remove the Bootstrap scripts from the canvas
+  editor.Canvas.getDocument()
+    .querySelectorAll(
+      'script[src*="bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"]'
+    )
+    .forEach(scriptTag => {
+      scriptTag.remove();
+    });
+}
+
+// Function to add the canvas styles and scripts
+function addCanvasResources() {
+  // Add the Bootstrap styles to the canvas
+  const styleLink = document.createElement("link");
+  styleLink.rel = "stylesheet";
+  styleLink.href =
+    "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css";
+  editor.Canvas.getDocument().head.appendChild(styleLink);
+
+  // Add the Bootstrap scripts to the canvas
+  const scriptTag = document.createElement("script");
+  scriptTag.src =
+    "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js";
+  editor.Canvas.getDocument().body.appendChild(scriptTag);
+
+  // Load the canvas
+  editor.load(editor.getConfig().canvas);
+}
+
+// Listen for changes in the select element
+const selectElement = document.getElementById("cdnSelect");
 selectElement.addEventListener("change", event => {
-  event.preventDefault();
   const selectedOption = event.target.value;
 
-  // Trigger an event based on the selected option
   if (selectedOption === "none") {
-    // Handle "None" option
+    removeCanvasResources(); // Remove the canvas resources
   } else if (selectedOption === "bootstrap") {
-    // Handle "Bootstrap" option
-    alert("Bootstrap selected");
+    addCanvasResources(); // Add the canvas resources
   }
 });
 
@@ -907,7 +944,6 @@ editor.Commands.add("show-blocks", {
     this.getTraitsEl(editor).style.display = "none";
   },
 });
-
 
 // commands for device manager
 editor.Commands.add("set-device-desktop", {
