@@ -639,6 +639,7 @@ editor.Panels.addPanel({
   id: "panel-top",
   el: ".panel__top",
 });
+
 // pannel switchr
 editor.Panels.addPanel({
   id: "panel-switcher",
@@ -794,6 +795,44 @@ editor.Panels.addPanel({
     },
   ],
 });
+// custom select pannel
+editor.Panels.addPanel({
+  id: "custom-panel", // Unique ID for your custom panel
+  el: ".custom-panel-container", // Selector for the panel's container
+  content: `
+  <label for="cdnSelect">Select CDN:</label>
+  <select id="cdnSelect">
+    <option value="none">None</option>
+    <option value="bootstrap">Bootstrap</option>
+  </select>
+  <style>
+  .responsive-select {
+    width: 100%; /* Make the select element occupy 100% of its container's width */
+    max-width: 200px; /* Set a maximum width to prevent it from becoming too wide on larger screens */
+    padding: 10px; /* Add padding for better touch interaction on mobile devices */
+    box-sizing: border-box; /* Include padding and border in the total width */
+  }
+  </style>
+  `,
+});
+// custon select btn command
+// Get the select element
+const selectElement = document.getElementById("cdnSelect");
+
+// Add an event listener to detect changes
+selectElement.addEventListener("change", event => {
+  event.preventDefault();
+  const selectedOption = event.target.value;
+
+  // Trigger an event based on the selected option
+  if (selectedOption === "none") {
+    // Handle "None" option
+  } else if (selectedOption === "bootstrap") {
+    // Handle "Bootstrap" option
+    alert("Bootstrap selected");
+  }
+});
+
 // commands
 // export code
 editor.on("run:export-template:before", opts => {

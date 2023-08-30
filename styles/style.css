@@ -36,6 +36,10 @@
 .gjs-four-color-h:hover {
   color: #ec5896;
 }
+/* cutom panel css  */
+.custom-panel-container{
+  margin-left: 25vw;
+}
 /* Reset some default styling */
 .gjs-cv-canvas {
   top: 0;
