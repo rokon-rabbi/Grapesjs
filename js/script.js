@@ -523,6 +523,8 @@ editor.BlockManager.add("Forms", {
     title: "form",
   },
 });
+
+// for input block
 editor.BlockManager.add("input", {
   label: "input",
   category: "forms",
@@ -534,7 +536,64 @@ editor.BlockManager.add("input", {
     title: "input",
   },
 });
-// form blocks
+// text aria block
+editor.BlockManager.add("text-area", {
+  label: "text area",
+  category: "forms",
+  content: ` 
+          <textarea name="textarea-input"></textarea>
+            `,
+  attributes: {
+    title: "text area",
+  },
+});
+//  select block
+editor.BlockManager.add("select", {
+  label: "select",
+  category: "forms",
+  content: `
+          <label>Options</label>
+          <select name="select-input">
+            <option value="">- Select -</option>
+            <option value="1">Value 1</option>
+            <option value="2">Value 2</option>
+            <option value="3">Value 3</option>
+          </select>
+     
+            `,
+  attributes: {
+    title: "select",
+  },
+});
+// check box block
+editor.BlockManager.add("check-box", {
+  label: "check-box",
+  category: "forms",
+  content: ` 
+        <div class="row">
+          <input type="checkbox" name="checkbox-input" value="1"> Test
+        </div>
+            `,
+  attributes: {
+    title: "checkbox",
+  },
+});
+// check box block
+editor.BlockManager.add("radio-box", {
+  label: "radio-box",
+  category: "forms",
+  content: ` 
+        <div class="row">
+          <input type="radio" name="radio-input" value="1"> 1
+          <input type="radio" name="radio-input" value="2"> 2
+          <input type="radio" name="radio-input" value="3"> 3
+        </div>
+            `,
+  attributes: {
+    title: "radio-box",
+  },
+});
+// js blocks
 editor.BlockManager.add("js-block", {
   label: "js",
   category: "js",
