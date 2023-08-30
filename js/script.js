@@ -523,6 +523,17 @@ editor.BlockManager.add("Forms", {
     title: "form",
   },
 });
+editor.BlockManager.add("input", {
+  label: "input",
+  category: "forms",
+  content: `     
+          <input type="text" name="text-input" value="">
+    
+            `,
+  attributes: {
+    title: "input",
+  },
+});
 // form blocks
 editor.BlockManager.add("js-block", {
   label: "js",
@@ -816,37 +827,3 @@ editor.on("update", function () {
   localStorage.setItem("Css", editorCss);
 });
 // Function to load Bootstrap CDN
-   // Function to load Bootstrap 5 CDN
-   function loadBootstrapCDN() {
-    // Include Bootstrap 5 JavaScript from a CDN
-    var scriptElement = document.createElement("script");
-    scriptElement.src = "https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js";
-    scriptElement.async = true;
-    document.body.appendChild(scriptElement);
-}
-
-// Function to remove Bootstrap 5 CDN
-function removeBootstrapCDN() {
-    // Remove Bootstrap 5 CSS by querying the link element
-    var linkElement = document.querySelector('link[href^="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"]');
-    if (linkElement) {
-        linkElement.remove();
-    }
-
-    // Remove Bootstrap 5 JavaScript by querying the script element
-    var scriptElement = document.querySelector('script[src^="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js"]');
-    if (scriptElement) {
-        scriptElement.remove();
-    }
-}
-
-// Event listener for select element change
-document.getElementById("cdnSelect").addEventListener("change", function() {
-    var selectedValue = this.value;
-
-    if (selectedValue === "bootstrap") {
-        loadBootstrapCDN();
-    } else if (selectedValue === "none") {
-        removeBootstrapCDN();
-    }
-});

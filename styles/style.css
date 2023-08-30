@@ -14,10 +14,10 @@
 .gjs-one-bg {
   background-color: #f3f3f3;
 }
-/* .styles-container {
+.styles-container {
   height: 100vh;
   overflow: scroll;
-} */
+}
 
 /* Secondary color for the text color */
 .gjs-two-color {
