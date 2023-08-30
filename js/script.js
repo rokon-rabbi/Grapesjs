@@ -805,14 +805,7 @@ editor.Panels.addPanel({
     <option value="none">None</option>
     <option value="bootstrap">Bootstrap</option>
   </select>
-  <style>
-  .responsive-select {
-    width: 100%; /* Make the select element occupy 100% of its container's width */
-    max-width: 200px; /* Set a maximum width to prevent it from becoming too wide on larger screens */
-    padding: 10px; /* Add padding for better touch interaction on mobile devices */
-    box-sizing: border-box; /* Include padding and border in the total width */
-  }
-  </style>
+ 
   `,
 });
 // custon select btn command
