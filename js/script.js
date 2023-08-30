@@ -615,7 +615,7 @@ editor.DomComponents.addType("input", {
         {
           type: "select", // Type of the trait
           label: "Type", // The label you will see in Settings
-          name: "type", // The name of the attribute/property to use on component
+          name: "type", // The name of the attribute/property to use on the component
           options: [
             { id: "text", name: "Text" },
             { id: "email", name: "Email" },
@@ -627,13 +627,20 @@ editor.DomComponents.addType("input", {
           type: "checkbox",
           name: "required",
         },
+        {
+          type: "checkbox", // Add a checkbox trait for read-only
+          name: "readonly", // Attribute/property name to use on the component
+          label: "Read-only", // Label for the checkbox trait
+        },
       ],
-      // As by default, traits are binded to attributes, so to define
+      
+      // As by default, traits are bound to attributes, so to define
       // their initial value we can use attributes
-      attributes: { type: "text", required: true },
+      attributes: { type: "text", required: true, readonly: false }, // Set readonly to false by default
     },
   },
 });
+
 // pannel top
 editor.Panels.addPanel({
   id: "panel-top",
@@ -681,6 +688,8 @@ editor.Panels.addPanel({
       command: "show-blocks",
       togglable: false,
     },
+    
+  
   ],
 });
 // basic actions
@@ -809,7 +818,7 @@ editor.Panels.addPanel({
   `,
 });
 // custon select btn command
-// Get the select element
+
 const selectElement = document.getElementById("cdnSelect");
 
 // Add an event listener to detect changes
@@ -898,6 +907,7 @@ editor.Commands.add("show-blocks", {
     this.getTraitsEl(editor).style.display = "none";
   },
 });
+
 
 // commands for device manager
 editor.Commands.add("set-device-desktop", {
