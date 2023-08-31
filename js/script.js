@@ -365,6 +365,18 @@ const editor = grapesjs.init({
         width: "320",
         widthMedia: "", // this value will be used in CSS @media
       },
+      {
+        name: "A4",
+        width: "210mm", // Adjust the width as needed
+        height: "297mm", // This width will be applied on the canvas frame
+        widthMedia: "210mm", // This width that will be used for the CSS media
+      },
+      {
+        name: "A5",
+        width: "148mm", // Adjust the width as needed
+        height: "210mm", // This width will be applied on the canvas frame
+        widthMedia: "210px", // This width that will be used for the CSS media
+      },
     ],
   },
   // storage manager
@@ -819,6 +831,29 @@ editor.Panels.addPanel({
  
   `,
 });
+// custom device pannel
+editor.Panels.addPanel({
+  id: "panel", // Unique ID for your custom panel
+  el: ".custom-device-container", // Selector for the panel's container
+  content: `
+  <label for="deviceSelect">Device</label>
+  <select id="deviceSelect">
+    <option value="A4">none</option>
+    <option value="A4">A4</option>
+    <option value="A5">A5</option>
+  </select>
+ 
+  `,
+});
+const selectCanvas = document.getElementById("deviceSelect");
+selectCanvas.addEventListener("change", event => {
+  const selectedCanvas = selectCanvas.options[selectCanvas.selectedIndex];
+  if (selectedCanvas.value === "A4") {
+    editor.setDevice("A4");
+  } else if (selectedCanvas.value === "A5") {
+    editor.setDevice("A5");
+  }
+});
 // custon select btn command
 
 function removeCanvasResources() {
@@ -863,11 +898,12 @@ function addCanvasResources() {
 // Listen for changes in the select element
 const selectElement = document.getElementById("cdnSelect");
 selectElement.addEventListener("change", event => {
-  const selectedOption = event.target.value;
+  event.preventDefault();
+  const selectedOption = selectElement.options[selectElement.selectedIndex];
 
-  if (selectedOption === "none") {
+  if (selectedOption.value === "none") {
     removeCanvasResources(); // Remove the canvas resources
-  } else if (selectedOption === "bootstrap") {
+  } else if (selectedOption.value === "bootstrap") {
     addCanvasResources(); // Add the canvas resources
   }
 });
@@ -946,12 +982,16 @@ editor.Commands.add("show-blocks", {
 });
 
 // commands for device manager
+// desktop
 editor.Commands.add("set-device-desktop", {
   run: editor => editor.setDevice("Desktop"),
 });
+// mobile
 editor.Commands.add("set-device-mobile", {
   run: editor => editor.setDevice("Mobile"),
 });
+
+// html css import command
 editor.Commands.add("htmlCss", {
   run: editor => {
     window.open("./webpage.html", "_blank");
@@ -964,3 +1004,4 @@ editor.on("update", function () {
   localStorage.setItem("Css", editorCss);
 });
 // Function to load Bootstrap CDN
+// Define a custom command handler for canvas size selection
