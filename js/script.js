@@ -377,12 +377,18 @@ const editor = grapesjs.init({
         height: "210mm", // This width will be applied on the canvas frame
         widthMedia: "210px", // This width that will be used for the CSS media
       },
+      {
+        name: "legal",
+        width: "215.9mm", // Adjust the width as needed
+        height: "355.6mm", // This width will be applied on the canvas frame
+        widthMedia: "210px", // This width that will be used for the CSS media
+      },
     ],
   },
   // storage manager
   storageManager: {
     type: "local", // Type of the storage, available: 'local' | 'remote'
-    autosave: true, // Store data automatically
+    autosave: false, // Store data automatically
     autoload: true, // Autoload stored data on init
     stepsBeforeSave: 1, // If autosave enabled, indicates how many changes are necessary before store method is triggered
     options: {
@@ -496,6 +502,23 @@ editor.BlockManager.add("3-Columns", {
             `,
   attributes: {
     title: "A block",
+  },
+});
+// bootstrap components 
+editor.BlockManager.add("bootstrap-card", {
+  label: "card",
+  category: "advanced",
+  content: ` <div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+            `,
+  attributes: {
+    title: "card",
   },
 });
 
@@ -619,6 +642,54 @@ editor.BlockManager.add("js-block", {
     title: "js",
   },
 });
+
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>-
+// function openCustomDeviceManager() {
+//   const modalContent = `
+//     <div>
+//       <label for="customWidth">Width:</label>
+//       <input type="number" id="customWidth" placeholder="Enter width">
+//       <label for="customHeight">Height:</label>
+//       <input type="number" id="customHeight" placeholder="Enter height">
+
+//     </div>
+//   `;
+
+//   const modalOptions = {
+//     title: 'Custom Device',
+//     content: modalContent,
+//     closeBtn: 'Close',
+//     buttons: [
+//       {
+//         text: 'Apply',
+//         action: function() {
+//           // Handle the user input here
+
+//           const customWidth = document.getElementById("customWidth").value;
+//           const customHeight = document.getElementById("customHeight").value;
+// const device1 = deviceManager.add({
+//  // Without an explicit ID, the `name` will be taken. In case of missing `name`, a random ID will be created.
+
+//  name: 'custom',
+//  width: `${customWidth}px`, // This width will be applied on the canvas frame and for the CSS media
+//  height: `${customHeight}px`, // This width will be applied on the canvas frame and for the CSS media
+// });
+//           // Set the canvas size with the specified width and height
+//           editor.setDevice("custom");
+
+//           // Close the modal
+//           modal.close();
+//         },
+//       },
+//     ],
+//   };
+
+//   const modal = editor.Modal;
+//   modal.open(modalOptions);
+// }
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 // for input fields traits
 editor.DomComponents.addType("input", {
   isComponent: el => el.tagName == "INPUT",
@@ -823,12 +894,12 @@ editor.Panels.addPanel({
   id: "custom-panel", // Unique ID for your custom panel
   el: ".custom-panel-container", // Selector for the panel's container
   content: `
-  <label for="cdnSelect">Select CDN:</label>
+  <label for="cdnSelect">Bootstrap:</label>
   <select id="cdnSelect">
-    <option value="none">None</option>
+    <option value="none">select</option>
     <option value="bootstrap">Bootstrap</option>
   </select>
- 
+
   `,
 });
 // custom device pannel
@@ -836,11 +907,13 @@ editor.Panels.addPanel({
   id: "panel", // Unique ID for your custom panel
   el: ".custom-device-container", // Selector for the panel's container
   content: `
-  <label for="deviceSelect">Device</label>
+  <label for="deviceSelect">Page Size</label>
   <select id="deviceSelect">
-    <option value="A4">none</option>
+    <option value="A4">select</option>
     <option value="A4">A4</option>
     <option value="A5">A5</option>
+    <option value="legal">legal</option>
+    <option value="custom">custom</option>
   </select>
  
   `,
@@ -852,6 +925,12 @@ selectCanvas.addEventListener("change", event => {
     editor.setDevice("A4");
   } else if (selectedCanvas.value === "A5") {
     editor.setDevice("A5");
+  } 
+  else if (selectedCanvas.value === "legal") {
+    editor.setDevice("legal");
+  }
+  else if (selectedCanvas.value === "custom") {
+    alert("custom");
   }
 });
 // custon select btn command
@@ -918,7 +997,7 @@ editor.on("run:export-template:before", opts => {
 });
 editor.on("run:export-template", () => console.log("After the command run"));
 editor.on("abort:export-template", () => console.log("Command aborted"));
-
+// layers command
 editor.Commands.add("show-layers", {
   getRowEl(editor) {
     return editor.getContainer().closest(".editor-row");
@@ -936,6 +1015,7 @@ editor.Commands.add("show-layers", {
     lmEl.style.display = "none";
   },
 });
+// styles command
 editor.Commands.add("show-styles", {
   getRowEl(editor) {
     return editor.getContainer().closest(".editor-row");
