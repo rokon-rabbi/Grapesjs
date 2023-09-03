@@ -5,6 +5,8 @@
 /* #gjs {
       border: 3px solid #444;
     } */
+    
+
 #gjs {
   border: none;
 }
@@ -44,9 +46,7 @@
 .gjs-toolbar {
   background-color:rgb(18, 47, 80);
 }
-.gjs-selected {
-  outline: 2px solid rgb(18, 47, 80) !important;
-}
+
 
 /* cutom panel css  */
 .custom-panel-container{

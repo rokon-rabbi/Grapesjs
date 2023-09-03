@@ -132,7 +132,7 @@ const editor = grapesjs.init({
       {
         name: "Decorations",
         open: false,
-        buildProps: ['background-color', 'box-shadow', 'custom-prop'],
+        buildProps: ["background-color", "box-shadow", "custom-prop"],
         properties: [
           "opacity",
           "border-radius",
@@ -145,7 +145,6 @@ const editor = grapesjs.init({
         name: "Extra",
         open: false,
         buildProps: ["transition", "perspective", "transform"],
-       
       },
       {
         name: "Flex",
@@ -371,19 +370,19 @@ const editor = grapesjs.init({
         name: "A4",
         width: "210mm", // Adjust the width as needed
         height: "297mm", // This width will be applied on the canvas frame
-        widthMedia: "210mm", // This width that will be used for the CSS media
+        widthMedia: "", // This width that will be used for the CSS media
       },
       {
         name: "A5",
         width: "148mm", // Adjust the width as needed
         height: "210mm", // This width will be applied on the canvas frame
-        widthMedia: "210px", // This width that will be used for the CSS media
+        widthMedia: "", // This width that will be used for the CSS media
       },
       {
         name: "legal",
         width: "215.9mm", // Adjust the width as needed
         height: "355.6mm", // This width will be applied on the canvas frame
-        widthMedia: "210px", // This width that will be used for the CSS media
+        widthMedia: "", // This width that will be used for the CSS media
       },
     ],
   },
@@ -646,49 +645,49 @@ editor.BlockManager.add("js-block", {
 });
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>-
-// function openCustomDeviceManager() {
-//   const modalContent = `
-//     <div>
-//       <label for="customWidth">Width:</label>
-//       <input type="number" id="customWidth" placeholder="Enter width">
-//       <label for="customHeight">Height:</label>
-//       <input type="number" id="customHeight" placeholder="Enter height">
+function openCustomDeviceManager() {
+  const modalContent = `
+    <div>
+      <label for="customWidth">Width:</label>
+      <input type="number" id="customWidth" placeholder="Enter width">
+      <label for="customHeight">Height:</label>
+      <input type="number" id="customHeight" placeholder="Enter height">
 
-//     </div>
-//   `;
+    </div>
+  `;
 
-//   const modalOptions = {
-//     title: 'Custom Device',
-//     content: modalContent,
-//     closeBtn: 'Close',
-//     buttons: [
-//       {
-//         text: 'Apply',
-//         action: function() {
-//           // Handle the user input here
+  const modalOptions = {
+    title: "Custom Device",
+    content: modalContent,
+    closeBtn: "Close",
+    buttons: [
+      {
+        text: "Apply",
+        action: function () {
+          // Handle the user input here
 
-//           const customWidth = document.getElementById("customWidth").value;
-//           const customHeight = document.getElementById("customHeight").value;
-// const device1 = deviceManager.add({
-//  // Without an explicit ID, the `name` will be taken. In case of missing `name`, a random ID will be created.
+          const customWidth = document.getElementById("customWidth").value;
+          const customHeight = document.getElementById("customHeight").value;
+          const device1 = deviceManager.add({
+            // Without an explicit ID, the `name` will be taken. In case of missing `name`, a random ID will be created.
 
-//  name: 'custom',
-//  width: `${customWidth}px`, // This width will be applied on the canvas frame and for the CSS media
-//  height: `${customHeight}px`, // This width will be applied on the canvas frame and for the CSS media
-// });
-//           // Set the canvas size with the specified width and height
-//           editor.setDevice("custom");
+            name: "custom",
+            width: `${customWidth}px`, // This width will be applied on the canvas frame and for the CSS media
+            height: `${customHeight}px`, // This width will be applied on the canvas frame and for the CSS media
+          });
+          // Set the canvas size with the specified width and height
+          editor.setDevice("custom");
 
-//           // Close the modal
-//           modal.close();
-//         },
-//       },
-//     ],
-//   };
+          // Close the modal
+          modal.close();
+        },
+      },
+    ],
+  };
 
-//   const modal = editor.Modal;
-//   modal.open(modalOptions);
-// }
+  const modal = editor.Modal;
+  modal.open(modalOptions);
+}
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 // for input fields traits
@@ -929,7 +928,7 @@ selectCanvas.addEventListener("change", event => {
   } else if (selectedCanvas.value === "legal") {
     editor.setDevice("legal");
   } else if (selectedCanvas.value === "custom") {
-    alert("custom");
+    openCustomDeviceManager();
   }
 });
 // custon select btn command
