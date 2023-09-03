@@ -132,6 +132,7 @@ const editor = grapesjs.init({
       {
         name: "Decorations",
         open: false,
+        buildProps: ['background-color', 'box-shadow', 'custom-prop'],
         properties: [
           "opacity",
           "border-radius",
@@ -144,6 +145,7 @@ const editor = grapesjs.init({
         name: "Extra",
         open: false,
         buildProps: ["transition", "perspective", "transform"],
+       
       },
       {
         name: "Flex",
@@ -504,7 +506,7 @@ editor.BlockManager.add("3-Columns", {
     title: "A block",
   },
 });
-// bootstrap components 
+// bootstrap components
 editor.BlockManager.add("bootstrap-card", {
   label: "card",
   category: "advanced",
@@ -642,7 +644,6 @@ editor.BlockManager.add("js-block", {
     title: "js",
   },
 });
-
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>-
 // function openCustomDeviceManager() {
@@ -925,11 +926,9 @@ selectCanvas.addEventListener("change", event => {
     editor.setDevice("A4");
   } else if (selectedCanvas.value === "A5") {
     editor.setDevice("A5");
-  } 
-  else if (selectedCanvas.value === "legal") {
+  } else if (selectedCanvas.value === "legal") {
     editor.setDevice("legal");
-  }
-  else if (selectedCanvas.value === "custom") {
+  } else if (selectedCanvas.value === "custom") {
     alert("custom");
   }
 });
@@ -1085,3 +1084,39 @@ editor.on("update", function () {
 });
 // Function to load Bootstrap CDN
 // Define a custom command handler for canvas size selection
+
+// editor.on("component:mount", component => {
+//   const element = component.view.el;
+
+//   if (component.get("draggable")) {
+//     element.style.position = "absolute";
+//     element.style.cursor = "move";
+//     element.style.userSelect = "none";
+
+//     let isDragging = false;
+//     let offsetX, offsetY;
+
+//     element.addEventListener("mousedown", e => {
+//       isDragging = true;
+//       offsetX = e.clientX - element.getBoundingClientRect().left;
+//       offsetY = e.clientY - element.getBoundingClientRect().top;
+
+//       element.style.zIndex = "1000";
+//     });
+
+//     document.addEventListener("mousemove", e => {
+//       if (isDragging) {
+//         const left = e.clientX - offsetX;
+//         const top = e.clientY - offsetY;
+
+//         element.style.left = `${left}px`;
+//         element.style.top = `${top}px`;
+//       }
+//     });
+
+//     document.addEventListener("mouseup", () => {
+//       isDragging = false;
+//       element.style.zIndex = "auto";
+//     });
+//   }
+// });

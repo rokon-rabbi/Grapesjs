@@ -40,6 +40,14 @@
 .gjs-four-color-h:hover {
   color: #ec5896;
 }
+/* tool bar css  */
+.gjs-toolbar {
+  background-color:rgb(18, 47, 80);
+}
+.gjs-selected {
+  outline: 2px solid rgb(18, 47, 80) !important;
+}
+
 /* cutom panel css  */
 .custom-panel-container{
   margin-left: 25vw;
