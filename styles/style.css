@@ -5,10 +5,13 @@
 /* #gjs {
       border: 3px solid #444;
     } */
-    
+/* body{
+      background-color: #434343;
+    } */
 
 #gjs {
   border: none;
+  /* margin: 30px; */
 }
 .gjs-clm-tags #gjs-clm-new {
   color: #434343 !important;
@@ -44,15 +47,14 @@
 }
 /* tool bar css  */
 .gjs-toolbar {
-  background-color:rgb(18, 47, 80);
+  background-color: rgb(18, 47, 80);
 }
-
 
 /* cutom panel css  */
-.custom-panel-container{
+.custom-panel-container {
   margin-left: 25vw;
 }
-.custom-device-container{
+.custom-device-container {
   margin-left: 70vw;
 }
 /* Reset some default styling */
