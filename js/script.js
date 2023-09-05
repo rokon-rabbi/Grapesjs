@@ -415,7 +415,8 @@ const editor = grapesjs.init({
     scripts: [],
   },
 });
-
+// content dragable functionality
+// editor.getModel().set('dmode', 'absolute');
 // image
 editor.BlockManager.add("image", {
   id: "image",
@@ -436,7 +437,7 @@ editor.BlockManager.add("image", {
     title: "image",
   },
 });
-// text
+// text    
 editor.BlockManager.add("text", {
   id: "text",
   category: "basics",
@@ -1083,39 +1084,3 @@ editor.on("update", function () {
 });
 // Function to load Bootstrap CDN
 // Define a custom command handler for canvas size selection
-
-// editor.on("component:mount", component => {
-//   const element = component.view.el;
-
-//   if (component.get("draggable")) {
-//     element.style.position = "absolute";
-//     element.style.cursor = "move";
-//     element.style.userSelect = "none";
-
-//     let isDragging = false;
-//     let offsetX, offsetY;
-
-//     element.addEventListener("mousedown", e => {
-//       isDragging = true;
-//       offsetX = e.clientX - element.getBoundingClientRect().left;
-//       offsetY = e.clientY - element.getBoundingClientRect().top;
-
-//       element.style.zIndex = "1000";
-//     });
-
-//     document.addEventListener("mousemove", e => {
-//       if (isDragging) {
-//         const left = e.clientX - offsetX;
-//         const top = e.clientY - offsetY;
-
-//         element.style.left = `${left}px`;
-//         element.style.top = `${top}px`;
-//       }
-//     });
-
-//     document.addEventListener("mouseup", () => {
-//       isDragging = false;
-//       element.style.zIndex = "auto";
-//     });
-//   }
-// });

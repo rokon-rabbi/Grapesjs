@@ -16,6 +16,9 @@
 .gjs-clm-tags #gjs-clm-new {
   color: #434343 !important;
 }
+/* .gjs-freezed{
+  pointer-events:all !important;
+} */
 
 /* Theming */
 
