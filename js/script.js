@@ -9,7 +9,7 @@ const editor = grapesjs.init({
   height: "100vh",
   width: "auto",
   // Disable the storage manager for the moment
-  storageManager: false,
+  storageManager: true,
   // Avoid any default panel
   panels: {
     defaults: [
@@ -39,7 +39,9 @@ const editor = grapesjs.init({
   // styleManager
   styleManager: {
     appendTo: ".styles-container",
+    custom: true,
     sectors: [
+    
       {
         name: "General",
         properties: [
@@ -65,6 +67,7 @@ const editor = grapesjs.init({
         name: "Dimension",
         open: false,
         properties: [
+   
           "width",
           {
             id: "flex-width",
@@ -411,10 +414,11 @@ const editor = grapesjs.init({
     ],
   },
   canvas: {
-    styles: [],
+    styles: ["../styles/style.css"],
     scripts: [],
   },
 });
+
 // content dragable functionality
 // editor.getModel().set('dmode', 'absolute');
 // image
@@ -437,7 +441,7 @@ editor.BlockManager.add("image", {
     title: "image",
   },
 });
-// text    
+// text
 editor.BlockManager.add("text", {
   id: "text",
   category: "basics",
@@ -716,6 +720,10 @@ editor.DomComponents.addType("input", {
           name: "required",
         },
         {
+          type: "input",
+          name: "required",
+        },
+        {
           type: "checkbox", // Add a checkbox trait for read-only
           name: "readonly", // Attribute/property name to use on the component
           label: "Read-only", // Label for the checkbox trait
@@ -728,6 +736,41 @@ editor.DomComponents.addType("input", {
     },
   },
 });
+// editor.DomComponents.addType("custom-input", {
+//   model: {
+//     defaults: {
+//       traits: [
+//         {
+//           type: "text",
+//           label: "Attribute Name",
+//           name: "data-attribute-name",
+//         },
+//         {
+//           type: "text",
+//           label: "Attribute Value",
+//           name: "data-attribute-value",
+//         },
+//       ],
+//       attributes: {
+//         "data-attribute-name": "custom-attr", // Default attribute name
+//         "data-attribute-value": "custom-value", // Default attribute value
+//       },
+//     },
+//   },
+//   view: {
+//     init() {
+//       this.listenTo(this.model, "change:data-attribute-name change:data-attribute-value", this.handleAttributeChange);
+//       this.handleAttributeChange();
+//     },
+//     handleAttributeChange() {
+//       const attributeName = this.model.get("data-attribute-name");
+//       const attributeValue = this.model.get("data-attribute-value");
+
+//       // Set the custom attribute and its value on the component's element
+//       this.el.setAttribute(attributeName, attributeValue);
+//     },
+//   },
+// });
 
 // pannel top
 editor.Panels.addPanel({

@@ -111,6 +111,15 @@
 .panel__devices {
   position: initial;
 }
+.text-black{
+  background-color: aquamarine ;
+}
+.center-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* .block{
     position: absolute;
     z-index: 3;
