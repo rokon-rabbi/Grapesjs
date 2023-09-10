@@ -41,7 +41,6 @@ const editor = grapesjs.init({
     appendTo: ".styles-container",
     custom: true,
     sectors: [
-    
       {
         name: "General",
         properties: [
@@ -67,7 +66,6 @@ const editor = grapesjs.init({
         name: "Dimension",
         open: false,
         properties: [
-   
           "width",
           {
             id: "flex-width",
@@ -649,6 +647,42 @@ editor.BlockManager.add("js-block", {
   },
 });
 
+// link block
+// Define the 'content-link' block
+editor.BlockManager.add("content-link", {
+  label: "Content Link",
+  category: "Contents",
+  attributes: "link",
+  content: {
+    type: "content-link",
+  },
+});
+
+// Define the 'content-link' component
+editor.DomComponents.addType("content-link", {
+  extend: "link",
+  model: {
+    defaults: {
+      editable: true,
+      droppable: true,
+      style: {
+        display: "inline-block",
+        padding: "5px",
+      },
+      attributes: { href: "http://google.com" },
+      content: "click me",
+    },
+  },
+
+  // view: {
+  //   events: {
+  //     click: function (event, model) {
+  //       window.open(this.model.get("attributes").href, "_self");
+  //     },
+  //   },
+  // },
+});
+
 // >>>>>>>>>>>>>>>>>>>>>>>>>>-
 function openCustomDeviceManager() {
   const modalContent = `
@@ -694,6 +728,7 @@ function openCustomDeviceManager() {
   modal.open(modalOptions);
 }
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// link
 
 // for input fields traits
 editor.DomComponents.addType("input", {

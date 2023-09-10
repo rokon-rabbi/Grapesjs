@@ -11,14 +11,12 @@
 
 #gjs {
   border: none;
-  /* margin: 30px; */
+  /* padding: 30px; */
 }
 .gjs-clm-tags #gjs-clm-new {
   color: #434343 !important;
 }
-/* .gjs-freezed{
-  pointer-events:all !important;
-} */
+
 
 /* Theming */
 
@@ -111,19 +109,10 @@
 .panel__devices {
   position: initial;
 }
-.text-black{
-  background-color: aquamarine ;
-}
+
 .center-image {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-/* .block{
-    position: absolute;
-    z-index: 3;
-    top: 100px;
-    right: 0px;
-
-  } */
