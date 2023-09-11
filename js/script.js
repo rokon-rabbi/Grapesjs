@@ -35,7 +35,7 @@ const editor = grapesjs.init({
   selectorManager: {
     appendTo: ".styles-container",
   },
-
+  // <button id="centerImageBtn">Center Image</button> 
   // styleManager
   styleManager: {
     appendTo: ".styles-container",
@@ -51,7 +51,8 @@ const editor = grapesjs.init({
             options: [
               { value: "none", className: "fa fa-times" },
               { value: "left", className: "fa fa-align-left" },
-              { value: "right", className: "fa fa-align-right" },     
+              { value: "right", className: "fa fa-align-right" }, 
+                
             ],
           },
           "display",
@@ -1190,3 +1191,30 @@ editor.on("update", function () {
 });
 // Function to load Bootstrap CDN
 // Define a custom command handler for canvas size selection
+// image center dom 
+const centerImageBtn = document.getElementById('centerImageBtn');
+
+centerImageBtn.addEventListener('click', () => {
+  // Get the currently selected component in GrapesJS
+  const selectedComponent = editor.getSelected();
+
+  // Check if a component is selected and if it's an instance of grapesjs Component
+  if (selectedComponent && selectedComponent instanceof editor.DomComponents.Component) {
+    // Check if the component already has a centered class
+    const isCentered = selectedComponent.getEl().classList.contains('centered-image');
+
+    // Add or remove the centered class based on its current state
+    if (isCentered) {
+      selectedComponent.getEl().classList.remove('centered-image');
+      selectedComponent.view.el.style.textAlign = 'initial';
+    } else {
+      selectedComponent.getEl().classList.add('centered-image');
+      selectedComponent.view.el.style.textAlign = 'center';
+    }
+  }
+});
+
+
+
+
+
