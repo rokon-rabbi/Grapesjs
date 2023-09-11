@@ -51,7 +51,7 @@ const editor = grapesjs.init({
             options: [
               { value: "none", className: "fa fa-times" },
               { value: "left", className: "fa fa-align-left" },
-              { value: "right", className: "fa fa-align-right" },
+              { value: "right", className: "fa fa-align-right" },     
             ],
           },
           "display",
@@ -368,6 +368,13 @@ const editor = grapesjs.init({
         widthMedia: "", // this value will be used in CSS @media
       },
       {
+        name: "Mobile(landscape)",
+        width: "780",
+        height:"320",
+        widthMedia: "", // this value will be used in CSS @media
+      },
+      
+      {
         name: "A4",
         width: "210mm", // Adjust the width as needed
         height: "297mm", // This width will be applied on the canvas frame
@@ -377,6 +384,12 @@ const editor = grapesjs.init({
         name: "A5",
         width: "148mm", // Adjust the width as needed
         height: "210mm", // This width will be applied on the canvas frame
+        widthMedia: "", // This width that will be used for the CSS media
+      },
+      {
+        name: "A5(landscape)",
+        width: "210mm", // Adjust the width as needed
+        height: "148mm", // This width will be applied on the canvas frame
         widthMedia: "", // This width that will be used for the CSS media
       },
       {
@@ -677,7 +690,7 @@ editor.DomComponents.addType("content-link", {
   // view: {
   //   events: {
   //     click: function (event, model) {
-  //       window.open(this.model.get("attributes").href, "_self");
+  //       window.open(this.model.get("attributes").href, "_blank");
   //     },
   //   },
   // },
@@ -966,6 +979,14 @@ editor.Panels.addPanel({
       command: "set-device-mobile",
       togglable: false,
     },
+    {
+      id: "device-mobile(landscape)",
+      label: `<svg style="display: block; max-width:22px" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M19,18H5V6H19M21,4H3C1.89,4 1,4.89 1,6V18A2,2 0 0,0 3,20H21A2,2 0 0,0 23,18V6C23,4.89 22.1,4 21,4Z"></path>
+  </svg>`,
+      command: "set-device-mobile-landscape",
+      togglable: false,
+    },
   ],
 });
 // custom select pannel
@@ -991,6 +1012,7 @@ editor.Panels.addPanel({
     <option value="A4">select</option>
     <option value="A4">A4</option>
     <option value="A5">A5</option>
+    <option value="A5(landscape)">A5(landscape)</option>
     <option value="legal">legal</option>
     <option value="custom">custom</option>
   </select>
@@ -1004,7 +1026,10 @@ selectCanvas.addEventListener("change", event => {
     editor.setDevice("A4");
   } else if (selectedCanvas.value === "A5") {
     editor.setDevice("A5");
-  } else if (selectedCanvas.value === "legal") {
+  }
+  else if (selectedCanvas.value === "A5(landscape)") {
+    editor.setDevice("A5(landscape)");
+  }  else if (selectedCanvas.value === "legal") {
     editor.setDevice("legal");
   } else if (selectedCanvas.value === "custom") {
     openCustomDeviceManager();
@@ -1146,6 +1171,9 @@ editor.Commands.add("set-device-desktop", {
 // mobile
 editor.Commands.add("set-device-mobile", {
   run: editor => editor.setDevice("Mobile"),
+});
+editor.Commands.add("set-device-mobile-landscape", {
+  run: editor => editor.setDevice("Mobile(landscape)"),
 });
 
 // html css import command

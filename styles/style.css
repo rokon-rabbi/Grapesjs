@@ -5,13 +5,15 @@
 /* #gjs {
       border: 3px solid #444;
     } */
-/* body{
-      background-color: #434343;
-    } */
+body{
+  background-color: #cfcfcf;
+      /* overflow-y: hidden; */
+    }
 
 #gjs {
   border: none;
-  /* padding: 30px; */
+  padding: 30px;
+
 }
 .gjs-clm-tags #gjs-clm-new {
   color: #434343 !important;
