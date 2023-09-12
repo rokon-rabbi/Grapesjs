@@ -3,7 +3,6 @@ const editor = grapesjs.init({
   container: "#gjs",
   // Get the content for the canvas directly from the element
   // As an alternative we could use: `components: '<h1>Hello World Component!</h1>'`,
-
   fromElement: true,
   // Size of the editor
   height: "100vh",
@@ -35,7 +34,7 @@ const editor = grapesjs.init({
   selectorManager: {
     appendTo: ".styles-container",
   },
-  // <button id="centerImageBtn">Center Image</button> 
+
   // styleManager
   styleManager: {
     appendTo: ".styles-container",
@@ -51,8 +50,7 @@ const editor = grapesjs.init({
             options: [
               { value: "none", className: "fa fa-times" },
               { value: "left", className: "fa fa-align-left" },
-              { value: "right", className: "fa fa-align-right" }, 
-                
+              { value: "right", className: "fa fa-align-right" },
             ],
           },
           "display",
@@ -371,10 +369,10 @@ const editor = grapesjs.init({
       {
         name: "Mobile(landscape)",
         width: "780",
-        height:"320",
+        height: "320",
         widthMedia: "", // this value will be used in CSS @media
       },
-      
+
       {
         name: "A4",
         width: "210mm", // Adjust the width as needed
@@ -1027,10 +1025,9 @@ selectCanvas.addEventListener("change", event => {
     editor.setDevice("A4");
   } else if (selectedCanvas.value === "A5") {
     editor.setDevice("A5");
-  }
-  else if (selectedCanvas.value === "A5(landscape)") {
+  } else if (selectedCanvas.value === "A5(landscape)") {
     editor.setDevice("A5(landscape)");
-  }  else if (selectedCanvas.value === "legal") {
+  } else if (selectedCanvas.value === "legal") {
     editor.setDevice("legal");
   } else if (selectedCanvas.value === "custom") {
     openCustomDeviceManager();
@@ -1191,30 +1188,31 @@ editor.on("update", function () {
 });
 // Function to load Bootstrap CDN
 // Define a custom command handler for canvas size selection
-// image center dom 
-const centerImageBtn = document.getElementById('centerImageBtn');
+// image center dom
+const centerImageBtn = document.getElementById("centerImageBtn");
 
-centerImageBtn.addEventListener('click', () => {
+centerImageBtn.addEventListener("click", () => {
   // Get the currently selected component in GrapesJS
   const selectedComponent = editor.getSelected();
 
   // Check if a component is selected and if it's an instance of grapesjs Component
-  if (selectedComponent && selectedComponent instanceof editor.DomComponents.Component) {
+  if (
+    selectedComponent &&
+    selectedComponent instanceof editor.DomComponents.Component
+  ) {
     // Check if the component already has a centered class
-    const isCentered = selectedComponent.getEl().classList.contains('centered-image');
+    const isCentered = selectedComponent
+      .getEl()
+      .classList.contains("centered-image");
 
     // Add or remove the centered class based on its current state
     if (isCentered) {
-      selectedComponent.getEl().classList.remove('centered-image');
-      selectedComponent.view.el.style.textAlign = 'initial';
+      selectedComponent.getEl().classList.remove("centered-image");
+      selectedComponent.view.el.style.textAlign = "initial";
     } else {
-      selectedComponent.getEl().classList.add('centered-image');
-      selectedComponent.view.el.style.textAlign = 'center';
+      selectedComponent.getEl().classList.add("centered-image");
+      selectedComponent.view.el.style.textAlign = "center";
     }
+    // editor.StyleManager.setStyle(selectedComponent);
   }
 });
-
-
-
-
-
