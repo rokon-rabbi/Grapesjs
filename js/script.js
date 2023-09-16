@@ -990,6 +990,7 @@ editor.Panels.addPanel({
       label: `<svg style="display: block; max-width:22px" viewBox="0 0 24 24"><path fill="currentColor" d="M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17M12,4.5C7,4.5 2.73,7.61 1,12C2.73,16.39 7,19.5 12,19.5C17,19.5 21.27,16.39 23,12C21.27,7.61 17,4.5 12,4.5Z"></path></svg>`,
       command: "preview",
     },
+
     // html css
     {
       id: "downloadHtml",
@@ -998,6 +999,16 @@ editor.Panels.addPanel({
       label: "HTML",
       command: "htmlCss",
       // For grouping context of buttons from the same panel
+    },
+    {
+      id: "undo",
+      className: "fa fa-undo",
+      command: "undo",
+    },
+    {
+      id: "redo",
+      className: "fa fa-repeat",
+      command: "redo",
     },
   ],
 });
@@ -1231,6 +1242,17 @@ editor.on("update", function () {
   let editorCss = editor.getCss();
   localStorage.setItem("Html", editorHtml);
   localStorage.setItem("Css", editorCss);
+});
+// undo redo
+editor.Commands.add("undo", {
+  run: editor => {
+    editor.UndoManager.undo();
+  },
+});
+editor.Commands.add("redo", {
+  run: editor => {
+    editor.UndoManager.redo();
+  },
 });
 // Function to load Bootstrap CDN
 // Define a custom command handler for canvas size selection
