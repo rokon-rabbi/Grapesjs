@@ -1290,3 +1290,87 @@ centerImageBtn.addEventListener("click", () => {
     // editor.styleManager.styles(selectedComponent);
   }
 });
+
+// custom context menus js code 
+window.onload = function () {
+  const contextmenu = document.getElementById("context-menu");
+  const gjs = document.getElementById("gjs");
+console.log(gjs);
+  const viewportWidth = document.documentElement.clientWidth;
+  const viewportHeight = document.documentElement.clientHeight;
+
+  
+  // context menu has to be in the dom to get its height
+  contextmenu.classList.remove('hide');
+
+  const contextmenuWidth = contextmenu.clientWidth;
+  const contextmenuHeight = contextmenu.clientHeight;
+
+  contextmenu.classList.add('hide');
+
+  /**
+   * Helper function to genetare the position style
+   */
+  function positionStyle(xPos, yPos) {
+      return `left: ${xPos}px; top: ${yPos}px`;
+  }
+
+  /**
+   * Helper function to determine if the element clicked is the context menu
+   */
+  function isElementContextMenu(element) {
+      return (
+          element.classList.contains("context-menu-item") ||
+          element.id === "context-menu"
+      );
+  }
+
+  editor.Canvas.getBody().addEventListener("contextmenu", function (event) {
+      event.preventDefault();
+
+      // get mouse location, x and y coordinate
+      let contextmenuX = event.clientX;
+      let contextmenuY = event.pageY;
+
+      
+
+      // if mouse position too close to right edge or bottom edge
+      // invert the context menu position
+      const contextmenuRightEdge =
+          event.clientX + contextmenuWidth;
+
+      const contextmenuBottomEdge =
+          event.clientY + contextmenuHeight;
+
+      const shouldInvertX = contextmenuRightEdge > viewportWidth;
+
+      const shouldInvertY = contextmenuBottomEdge > viewportHeight;
+
+      // open the context menu on the other direction
+      if (shouldInvertX) {
+          contextmenuX = contextmenuX - contextmenuWidth;
+      }
+
+      if (shouldInvertY) {
+          contextmenuY = event.pageY - contextmenuHeight;
+      }
+
+      // set the position
+      contextmenu.setAttribute(
+          "style",
+          positionStyle(contextmenuX, contextmenuY)
+      );
+
+      // show the context menu
+      contextmenu.classList.remove("hide");
+  });
+
+  editor.Canvas.getBody().addEventListener("click", function (event) {
+      const element = event.target;
+
+      // hide context menu if left clicking on anywhere else
+      if (!isElementContextMenu(element)) {
+          contextmenu.classList.add("hide");
+      }
+  });
+};
