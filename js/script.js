@@ -337,6 +337,7 @@ const editor = grapesjs.init({
   },
   traitManager: {
     appendTo: ".traits-container",
+    custom: true,
   },
   jsManager: {
     appendTo: ".js-container",
@@ -399,10 +400,11 @@ const editor = grapesjs.init({
       },
     ],
   },
+  plugins: ['gjs-blocks-basic'],
   // storage manager
   storageManager: {
     type: "local", // Type of the storage, available: 'local' | 'remote'
-    autosave: false, // Store data automatically
+    autosave: true, // Store data automatically
     autoload: true, // Autoload stored data on init
     stepsBeforeSave: 1, // If autosave enabled, indicates how many changes are necessary before store method is triggered
     options: {
@@ -489,7 +491,7 @@ editor.BlockManager.add("3-Columns", {
 </svg>`,
   category: "basics",
   content: `<style>
-            .gjs-row{
+            #gjs-row{
                 display:flex;
                 justify-content:flex-start;
                 align-items:stretch;
@@ -507,7 +509,7 @@ editor.BlockManager.add("3-Columns", {
                 }
               }
             </style>
-        <div data-gjs-type="default"  class="gjs-row">
+        <div data-gjs-type="default" id="gjs-row" class="">
           <div data-gjs-type="default" class="gjs-cell">
           </div>
           <div data-gjs-type="default" class="gjs-cell">
@@ -787,6 +789,26 @@ function openCustomDeviceManager() {
 }
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // link
+// custom traits section
+// Define a custom trait type
+
+// var inputValue = '';
+// document.getElementById("attribute").addEventListener('change', function() {
+//     inputValue = this.value;
+//     console.log(inputValue)
+// });
+
+var defaultType = editor.DomComponents.getType("default");
+var _initialize = defaultType.model.prototype.initialize;
+defaultType.model.prototype.initialize = function () {
+  _initialize.apply(this, arguments);
+
+  this.get("traits").add({
+    type: "input",
+    label: "Attribute",
+    name: "custom-attribute", // Use the inputValue variable directly
+  });
+};
 
 // for input fields traits
 editor.DomComponents.addType("input", {
@@ -1291,86 +1313,98 @@ centerImageBtn.addEventListener("click", () => {
   }
 });
 
-// custom context menus js code 
-window.onload = function () {
-  const contextmenu = document.getElementById("context-menu");
-  const gjs = document.getElementById("gjs");
-console.log(gjs);
-  const viewportWidth = document.documentElement.clientWidth;
-  const viewportHeight = document.documentElement.clientHeight;
+// custom context menus js code
+// window.onload = function () {
+//   const contextmenu = document.getElementById("context-menu");
+//   const gjs = document.getElementById("gjs");
+//   console.log(gjs);
+//   const viewportWidth = document.documentElement.clientWidth;
+//   const viewportHeight = document.documentElement.clientHeight;
 
-  
-  // context menu has to be in the dom to get its height
-  contextmenu.classList.remove('hide');
+//   // context menu has to be in the dom to get its height
+//   contextmenu.classList.remove("hide");
 
-  const contextmenuWidth = contextmenu.clientWidth;
-  const contextmenuHeight = contextmenu.clientHeight;
+//   const contextmenuWidth = contextmenu.clientWidth;
+//   const contextmenuHeight = contextmenu.clientHeight;
 
-  contextmenu.classList.add('hide');
+//   contextmenu.classList.add("hide");
 
-  /**
-   * Helper function to genetare the position style
-   */
-  function positionStyle(xPos, yPos) {
-      return `left: ${xPos}px; top: ${yPos}px`;
-  }
+//   /**
+//    * Helper function to genetare the position style
+//    */
+//   function positionStyle(xPos, yPos) {
+//     return `left: ${xPos}px; top: ${yPos}px`;
+//   }
 
-  /**
-   * Helper function to determine if the element clicked is the context menu
-   */
-  function isElementContextMenu(element) {
-      return (
-          element.classList.contains("context-menu-item") ||
-          element.id === "context-menu"
-      );
-  }
+//   /**
+//    * Helper function to determine if the element clicked is the context menu
+//    */
+//   function isElementContextMenu(element) {
+//     return (
+//       element.classList.contains("context-menu-item") ||
+//       element.id === "context-menu"
+//     );
+//   }
 
-  editor.Canvas.getBody().addEventListener("contextmenu", function (event) {
-      event.preventDefault();
+//   editor.Canvas.getBody().addEventListener("contextmenu", function (event) {
+//     event.preventDefault();
 
-      // get mouse location, x and y coordinate
-      let contextmenuX = event.clientX;
-      let contextmenuY = event.pageY;
+//     // get mouse location, x and y coordinate
+//     let contextmenuX = event.clientX;
+//     let contextmenuY = event.pageY;
 
-      
+//     // if mouse position too close to right edge or bottom edge
+//     // invert the context menu position
+//     const contextmenuRightEdge = event.clientX + contextmenuWidth;
 
-      // if mouse position too close to right edge or bottom edge
-      // invert the context menu position
-      const contextmenuRightEdge =
-          event.clientX + contextmenuWidth;
+//     const contextmenuBottomEdge = event.clientY + contextmenuHeight;
 
-      const contextmenuBottomEdge =
-          event.clientY + contextmenuHeight;
+//     const shouldInvertX = contextmenuRightEdge > viewportWidth;
 
-      const shouldInvertX = contextmenuRightEdge > viewportWidth;
+//     const shouldInvertY = contextmenuBottomEdge > viewportHeight;
 
-      const shouldInvertY = contextmenuBottomEdge > viewportHeight;
+//     // open the context menu on the other direction
+//     if (shouldInvertX) {
+//       contextmenuX = contextmenuX - contextmenuWidth;
+//     }
 
-      // open the context menu on the other direction
-      if (shouldInvertX) {
-          contextmenuX = contextmenuX - contextmenuWidth;
-      }
+//     if (shouldInvertY) {
+//       contextmenuY = event.pageY - contextmenuHeight;
+//     }
 
-      if (shouldInvertY) {
-          contextmenuY = event.pageY - contextmenuHeight;
-      }
+//     // set the position
+//     contextmenu.setAttribute(
+//       "style",
+//       positionStyle(contextmenuX, contextmenuY)
+//     );
 
-      // set the position
-      contextmenu.setAttribute(
-          "style",
-          positionStyle(contextmenuX, contextmenuY)
-      );
+//     // show the context menu
+//     contextmenu.classList.remove("hide");
+//   });
 
-      // show the context menu
-      contextmenu.classList.remove("hide");
-  });
+//   editor.Canvas.getBody().addEventListener("click", function (event) {
+//     const element = event.target;
 
-  editor.Canvas.getBody().addEventListener("click", function (event) {
-      const element = event.target;
+//     // hide context menu if left clicking on anywhere else
+//     if (!isElementContextMenu(element)) {
+//       contextmenu.classList.add("hide");
+//     }
+//   });
+//   // list item click listenner
+//   const contextMenuItems = contextmenu.querySelectorAll(".context-menu-item");
+//   contextMenuItems.forEach(menuItem => {
+//     menuItem.addEventListener("click", function (event) {
+//       // Determine which list item was clicked
+//       const clickedMenuItem = event.target.textContent;
 
-      // hide context menu if left clicking on anywhere else
-      if (!isElementContextMenu(element)) {
-          contextmenu.classList.add("hide");
-      }
-  });
-};
+//       // Hide the context menu
+//       contextmenu.classList.add("hide");
+
+//       // Log the clicked item to the console
+//       console.log(`Clicked: ${clickedMenuItem}`);
+
+//       // Perform actions based on the clicked item (e.g., copy, paste, etc.)
+//       // Add your logic here...
+//     });
+//   });
+// };
