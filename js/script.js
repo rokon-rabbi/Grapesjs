@@ -400,7 +400,6 @@ const editor = grapesjs.init({
       },
     ],
   },
-  plugins: ['gjs-blocks-basic'],
   // storage manager
   storageManager: {
     type: "local", // Type of the storage, available: 'local' | 'remote'
@@ -792,21 +791,21 @@ function openCustomDeviceManager() {
 // custom traits section
 // Define a custom trait type
 
-// var inputValue = '';
-// document.getElementById("attribute").addEventListener('change', function() {
-//     inputValue = this.value;
-//     console.log(inputValue)
-// });
+// let inputValue = '';
+
 
 var defaultType = editor.DomComponents.getType("default");
 var _initialize = defaultType.model.prototype.initialize;
 defaultType.model.prototype.initialize = function () {
   _initialize.apply(this, arguments);
-
+  // document.getElementById("attribute").addEventListener('change', function() {
+  //   inputValue = this.value;
+  //   console.log(inputValue)
+// });
   this.get("traits").add({
     type: "input",
     label: "Attribute",
-    name: "custom-attribute", // Use the inputValue variable directly
+    name: "custom-attribute", 
   });
 };
 
