@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="attr" border="1">
+        <thead>
+            <tr>
+                <th>Attribute Name</th>
+                <th>Attribute Value</th>
+                <th>#</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3"><button id="add-new">ADD NEW</button></td>
+            </tr>
+        </tfoot>
+    </table>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).on('click', '#add-new', function(){
+            const html= `<tr>
+                            <td><input placeholder="attribute name"></td>
+                            <td><input placeholder="attribute value"></td>
+                            <td><button class="delete-attr">DELETE</button></td>
+                        </tr>`;
+            $('#attr>tbody').append(html);
+        });
+
+        $(document).on('click', '.delete-attr', function(){
+            $(this).closest('tr').remove();
+        });
+    </script>
+</body>
+</html>
